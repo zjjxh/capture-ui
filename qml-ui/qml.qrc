@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>FlatButton.qml</file>
+        <file>icons/ic_rotate_left.png</file>
+        <file>icons/ic_rotate_right.png</file>
+    </qresource>
+</RCC>
