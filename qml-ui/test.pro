@@ -18,6 +18,7 @@ SOURCES += \
 
 RESOURCES += qml.qrc
 
+QT+=serialbus
 QT+=serialport
 QT+= qml
 
@@ -34,3 +35,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     serialport.h
+
+DISTFILES += \
+    popup.qml

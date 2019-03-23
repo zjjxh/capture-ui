@@ -6,11 +6,21 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.4 as Styles
 import QtMultimedia 5.8
 
-Window {
+ApplicationWindow {
     visible: true
-    width: 640
-    height: 480
-    title: qsTr("Hello World")
+    width: 800
+    height: 600
+    title: qsTr("Capture Demo")
+    Popup{ id:pwin}
+
+    menuBar: MenuBar {
+        Menu {
+            title: "Edit"
+            MenuItem { text: "Setting"
+            onClicked: pwin.show();
+            }
+        }
+    }
 
     Controls14.SplitView{
         anchors.fill:parent;
@@ -18,10 +28,10 @@ Window {
         Rectangle{
             id:rect1;
             Layout.fillWidth: true;
-            Layout.minimumWidth: 440
+            Layout.minimumWidth: 560
             MediaPlayer {
                 id: mediaPlayer
-                source: "file:///H:/怒晴湘西02.mp4"
+                source: "file:///I:/怒晴湘西02.mp4"
                 autoPlay: true
             }
 
@@ -34,6 +44,10 @@ Window {
                 id: playArea
                 anchors.fill: parent
                 property int status: 1
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 0
+                anchors.topMargin: 0
+                anchors.rightMargin: -65
                 onPressed:  {
                     if(status == 1)
                     {
@@ -46,6 +60,7 @@ Window {
                         mediaPlayer.play()
                     }
                 }
+
             }
             Rectangle {
                 id: progressBar
@@ -78,6 +93,7 @@ Window {
         }
         Rectangle{
             id:rect2;
+            x: 599
             width: 200;
             //color:"blue";
             ComboBox {
@@ -115,6 +131,7 @@ Window {
                 font.pointSize: 14;
                 onClicked: {
                     console.log("right button clicked")
+                    MySerialPort.motor_move(box2.currentIndex+1, Number(tfiled.text), 0, speedCombox.currentIndex+1)
                 }
             }
 
@@ -143,6 +160,7 @@ Window {
                 font.pointSize: 14;
                 onClicked: {
                     console.log("left button clicked")
+                    MySerialPort.motor_move(box2.currentIndex+1, Number(tfiled.text), 1, speedCombox.currentIndex+1)
                 }
             }
 
@@ -158,12 +176,12 @@ Window {
             }
 
             ComboBox {
-                id: baudCombox
+                id: speedCombox
                 x: -2
-                y: 212
+                y: 285
                 width: 140
-                height: 44
-                model: ["4800", "9600","115200","230400","460800"]
+                height: 36
+                model: ["1", "4","8"]
                 anchors.horizontalCenterOffset: 0
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -171,12 +189,55 @@ Window {
                 //objectName: "operateBtn";
                 id:operateBtn;
                 x: 30
+                y: 222
                 width:140
                 height: 35;
-                anchors.verticalCenter: parent.verticalCenter;
+                //anchors.verticalCenter: parent.verticalCenter;
                 text:"Open";
-                anchors.verticalCenterOffset: 62;
-                onClicked:MySerialPort.serialPortOperate(comCombox.currentIndex,baudCombox.currentIndex,0,0,0);
+                anchors.horizontalCenterOffset: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                //anchors.verticalCenterOffset: 65
+                onClicked:MySerialPort.serialPortOperate(comCombox.currentIndex,speedCombox.currentIndex,0,0,0);
+            }
+
+            FlatButton {
+                id: run_left
+                x: 22
+                y: 455
+                width: 55
+                height: 32
+                iconSource: "icons/ic_backward.png";
+                font.pointSize: 14;
+                onClicked: {
+                    console.log("left button clicked")
+                    MySerialPort.motor_run(box2.currentIndex, 1, speedCombox.currentIndex)
+                }
+            }
+            FlatButton {
+                id: run_right
+                x: 78
+                y: 454
+                width: 50
+                height: 33
+                iconSource: "icons/ic_forward.png";
+                onClicked: {
+                    console.log("left button clicked")
+                    MySerialPort.motor_run(box2.currentIndex, 0, speedCombox.currentIndex)
+                }
+            }
+
+            FlatButton {
+                id: run_stop
+                x: 133
+                y: 453
+                width: 52
+                height: 40
+                iconSource: "icons/ic_media_pause.png";
+                font.pointSize: 14;
+                onClicked: {
+                    console.log("left button clicked")
+                    MySerialPort.motor_run(box2.currentIndex, 2, speedCombox.currentIndex)
+                }
             }
         }
         Connections{
@@ -185,7 +246,7 @@ Window {
                   if(MySerialPort.linkStatus==true){
                       operateBtn.text="Close";
                       comCombox.enabled=false;
-                      baudCombox.enabled=false;
+                      speedCombox.enabled=false;
                       //stopCombox.enabled=false;
                       //dataCombox.enabled=false;
                       //parityCombox.enabled=false;
@@ -193,15 +254,31 @@ Window {
                   else{
                       operateBtn.text="Open";
                       comCombox.enabled=true;
-                      baudCombox.enabled=true;
+                      speedCombox.enabled=true;
                       //stopCombox.enabled=true;
                       //dataCombox.enabled=true;
                       //parityCombox.enabled=true;
                   }
               }
-          }
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
