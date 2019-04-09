@@ -1,16 +1,5 @@
-//==============================================================================
-// Project: QtQuickPlayer
-// Author: Ivan Vasilev <ivan.v.vasilev at Gmail>
-//
-// A simple application demostrating QtQuick(QML) integration with gstreamer
-//
-// interaction_controller.h - a class to handle QML<-->C++ interaction -
-//  mainly responding to user commands for now
-//
-//==============================================================================
-#ifndef INTERACTIONCONTROLLER_H
-#define INTERACTIONCONTROLLER_H
-
+#ifndef INTERACTIONCONTROLLER_H_
+#define INTERACTIONCONTROLLER_H_
 
 //==============================================================================
 // Includes
@@ -25,20 +14,16 @@ class InteractionController : public QObject
 {
 	Q_OBJECT
 public:
-	explicit InteractionController(QQuickWindow *window, GstElement *gstPlayer, GstElement *snapShot, bool autoplay);
+    explicit InteractionController(QQuickWindow *window, GstElement *gstPlayer, GstElement *gstSrc);
 	~InteractionController();
-
 signals:
 	// none at that point
-
 public slots:
-	void PlayPauseSlot();       // triggered when the user presses the play/pause control
-	void FullScreenSlot();      // triggered when the user presses the fullscreen control
-
+    void select_src(QString src);       // triggered when the user select-input-src
 private:
 	GstElement *m_GstPlayer;
-	GstElement *m_snapshot;
-	QQuickItem *m_PlayPauseControl;
+    GstElement *m_GstSrc;
+    QQuickItem *m_SelectSrc;
 	QQuickWindow *m_RootObject;
 };
 

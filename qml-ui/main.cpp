@@ -21,22 +21,18 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    // Pipeline object
     GstElement *pipeline = gst_pipeline_new(nullptr);
-
-    //GstElement *src = gst_element_factory_make("videotestsrc", nullptr);
-    //GstElement *src = gst_element_factory_make("autovideosrc", nullptr);
     GstElement *src = gst_element_factory_make("v4l2src", nullptr);
 
     //add capfilter
     GstElement *capsfilter = gst_element_factory_make("capsfilter", nullptr);
     GstCaps *caps = gst_caps_new_simple ("video/x-raw",
-       //"format", G_TYPE_STRING, "ARGB",
-       "framerate", GST_TYPE_FRACTION, 15, 1,
-       "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
-       //"width", G_TYPE_INT, 800,
-       //"height", G_TYPE_INT, 600,
-       NULL);
+           //"format", G_TYPE_STRING, "ARGB",
+           "framerate", GST_TYPE_FRACTION, 15, 1,
+           "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
+           //"width", G_TYPE_INT, 800,
+           //"height", G_TYPE_INT, 600,
+           NULL);
     g_object_set(capsfilter, "caps", caps, nullptr);
 
     // convert to GL texture (as qmlglsink expects, also this force processing the video accelerated by the GPU)
@@ -67,7 +63,7 @@ int main(int argc, char *argv[])
     GstBus *srcBus = gst_element_get_bus(pipeline);
     srcPipelinePoller = new GstBusPoller(srcBus, "srcPipelinePoller");
     g_object_unref(srcBus);
-    interactionController = new InteractionController(rootObject, pipeline, nullptr, false);
+    interactionController = new InteractionController(rootObject, pipeline, src);/*pipline sinked. no need to unref*/
 
     ret = app.exec();
 

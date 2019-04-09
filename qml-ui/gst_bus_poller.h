@@ -1,18 +1,5 @@
-//==============================================================================
-// Project: QtQuickPlayer
-// Author: Ivan Vasilev <ivan.v.vasilev at Gmail>
-//
-// A simple application demostrating QtQuick(QML) integration with gstreamer
-//
-// gst_bus_poller.h - a class to periodically pop messages from a gstreamer
-//  bus. nominal use case is
-//  GstElement *pipeline = gst_pipeline_new ("playpipeline");
-//  playPipelinePoller = new GstBusPoller(gst_pipeline_get_bus(GST_PIPELINE (pipeline)), "playPipelinePoller");
-//
-//==============================================================================
-
-#ifndef GSTBUSPOLLER_H
-#define GSTBUSPOLLER_H
+#ifndef GSTBUSPOLLER_H_
+#define GSTBUSPOLLER_H_
 
 //==============================================================================
 // Includes
