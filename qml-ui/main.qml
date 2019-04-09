@@ -17,7 +17,7 @@ ApplicationWindow {
         Menu {
             title: "Edit"
             MenuItem { text: "Setting"
-            onClicked: pwin.show();
+                onClicked: pwin.show();
             }
         }
     }
