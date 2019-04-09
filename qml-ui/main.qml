@@ -4,7 +4,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 1.4 as Controls14
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.4 as Styles
-import QtMultimedia 5.8
+import org.freedesktop.gstreamer.GLVideoItem 1.0
 
 ApplicationWindow {
     visible: true
@@ -29,67 +29,17 @@ ApplicationWindow {
             id:rect1;
             Layout.fillWidth: true;
             Layout.minimumWidth: 560
-            MediaPlayer {
-                id: mediaPlayer
-                source: "file:///I:/怒晴湘西02.mp4"
-                autoPlay: true
-            }
-
-            VideoOutput {
-                id: video
+            Item {
                 anchors.fill: parent
-                source: mediaPlayer
-            }
-            MouseArea {
-                id: playArea
-                anchors.fill: parent
-                property int status: 1
-                anchors.bottomMargin: 0
-                anchors.leftMargin: 0
-                anchors.topMargin: 0
-                anchors.rightMargin: -65
-                onPressed:  {
-                    if(status == 1)
-                    {
-                        status = 0
-                        mediaPlayer.pause()
-                    }
-                    else
-                    {
-                        status = 1
-                        mediaPlayer.play()
-                    }
-                }
-
-            }
-            Rectangle {
-                id: progressBar
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                anchors.margins: 0
-                height: 10
-                color: "lightGray"
-
-                Rectangle {
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: mediaPlayer.duration>0?parent.width*mediaPlayer.position/mediaPlayer.duration:0
-                    color: "darkGreen"
-                }
-
-                MouseArea {
-                    property int pos
-                    anchors.fill: parent
-
-                    onClicked: {
-                    if (mediaPlayer.seekable)
-                        pos = mediaPlayer.duration * mouse.x/width
-                        mediaPlayer.seek(pos)
-                    }
+                GstGLVideoItem {
+                    id: videoItem
+                    objectName: "videoItem"
+                    anchors.centerIn: parent
+                    width: parent.width
+                    height: parent.height
                 }
             }
+
         }
         Rectangle{
             id:rect2;
@@ -165,17 +115,6 @@ ApplicationWindow {
             }
 
             ComboBox {
-                id: comCombox
-                x: 4
-                y: 147
-                width: 140
-                height: 44
-                model:MySerialPort.portName
-                anchors.horizontalCenterOffset: 0
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-
-            ComboBox {
                 id: speedCombox
                 x: -2
                 y: 285
@@ -239,27 +178,6 @@ ApplicationWindow {
                     MySerialPort.motor_run(box2.currentIndex, 2, speedCombox.currentIndex)
                 }
             }
-        }
-        Connections{
-              target:MySerialPort;
-              onLinkStatusChanged:{
-                  if(MySerialPort.linkStatus==true){
-                      operateBtn.text="Close";
-                      comCombox.enabled=false;
-                      speedCombox.enabled=false;
-                      //stopCombox.enabled=false;
-                      //dataCombox.enabled=false;
-                      //parityCombox.enabled=false;
-                  }
-                  else{
-                      operateBtn.text="Open";
-                      comCombox.enabled=true;
-                      speedCombox.enabled=true;
-                      //stopCombox.enabled=true;
-                      //dataCombox.enabled=true;
-                      //parityCombox.enabled=true;
-                  }
-              }
         }
     }
 }

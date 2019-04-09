@@ -14,7 +14,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    serialport.cpp
+    serialport.cpp \
+    interaction_controller.cpp \
+    gst_bus_poller.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,8 +35,15 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+QT_CONFIG -= no-pkg-config
+CONFIG += link_pkgconfig
+PKGCONFIG = \
+    gstreamer-1.0
+
 HEADERS += \
-    serialport.h
+    serialport.h \
+    interaction_controller.h \
+    gst_bus_poller.h
 
 DISTFILES += \
     popup.qml
