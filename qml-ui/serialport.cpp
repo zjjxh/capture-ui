@@ -1,8 +1,8 @@
 #include "serialport.h"
 #include <QModbusRtuSerialMaster>
 #include <QDebug>
-#include <qelapsedtimer.h>
-#include <QCoreApplication.h>
+#include <QElapsedTimer>
+#include <QCoreApplication>
 #include <QtMath>
 
 MySerialPort::MySerialPort(QObject *parent) : QObject(parent){
