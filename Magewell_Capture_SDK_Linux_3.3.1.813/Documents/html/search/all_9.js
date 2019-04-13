@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['large_5finteger',['LARGE_INTEGER',['../_m_w_capture_extension_8h.html#a1638d44e4150a318c2791b2f719787aa',1,'MWCaptureExtension.h']]],
+  ['left',['left',['../struct___m_w_r_e_c_t.html#ab9c055f5477570bf69a93af0b79f9b7d',1,'_MWRECT::left()'],['../struct___r_e_c_t.html#ad8f5e19e19f12974c9713e920ec54331',1,'_RECT::left()']]],
+  ['length',['length',['../struct__mw__scatterlist__t.html#ae809d5359ac030c60a30a8f0b2294b82',1,'_mw_scatterlist_t']]],
+  ['libmwcapture_5fapi',['LIBMWCAPTURE_API',['../_m_w_capture_8h.html#aa934a42808db863682bc09e13744a54f',1,'LIBMWCAPTURE_API():&#160;MWCapture.h'],['../_m_w_eco_capture_8h.html#aa934a42808db863682bc09e13744a54f',1,'LIBMWCAPTURE_API():&#160;MWEcoCapture.h'],['../_m_w_pro_capture_8h.html#aa934a42808db863682bc09e13744a54f',1,'LIBMWCAPTURE_API():&#160;MWProCapture.h'],['../_m_w_u_s_b_capture_8h.html#aa934a42808db863682bc09e13744a54f',1,'LIBMWCAPTURE_API():&#160;MWUSBCapture.h']]],
+  ['liphysicaladdress',['liPhysicalAddress',['../struct___m_w_c_a_p___v_i_d_e_o___c_a_p_t_u_r_e___f_r_a_m_e.html#ade3a162a1104608b12d8a0042c58dedf',1,'_MWCAP_VIDEO_CAPTURE_FRAME::liPhysicalAddress()'],['../struct___m_w_c_a_p___v_i_d_e_o___c_a_p_t_u_r_e___s_t_a_t_u_s.html#ade3a162a1104608b12d8a0042c58dedf',1,'_MWCAP_VIDEO_CAPTURE_STATUS::liPhysicalAddress()']]],
+  ['lisrcphysicaladdress',['liSrcPhysicalAddress',['../struct___m_w_c_a_p___v_i_d_e_o___u_p_l_o_a_d___i_m_a_g_e.html#acb8544f3de15bcb1ebef96a6682a1cb9',1,'_MWCAP_VIDEO_UPLOAD_IMAGE']]],
+  ['llexpiretime',['llExpireTime',['../struct___m_w_c_a_p___t_i_m_e_r___e_x_p_i_r_e___t_i_m_e.html#a0ca332465255a3bdf6a16ee57988e593',1,'_MWCAP_TIMER_EXPIRE_TIME']]],
+  ['llframeduration',['llFrameDuration',['../struct___m_w_c_a_p___v_i_d_e_o___e_c_o___c_a_p_t_u_r_e___o_p_e_n.html#a13c38cb46a9baae8cc43c253f74c830a',1,'_MWCAP_VIDEO_ECO_CAPTURE_OPEN']]],
+  ['lltimestamp',['llTimestamp',['../struct___m_w_c_a_p___a_u_d_i_o___c_a_p_t_u_r_e___f_r_a_m_e.html#a3afb3978aa88d4a95ef762d5e594fe23',1,'_MWCAP_AUDIO_CAPTURE_FRAME::llTimestamp()'],['../struct___m_w_c_a_p___v_i_d_e_o___e_c_o___c_a_p_t_u_r_e___s_t_a_t_u_s.html#a3afb3978aa88d4a95ef762d5e594fe23',1,'_MWCAP_VIDEO_ECO_CAPTURE_STATUS::llTimestamp()']]],
+  ['long',['LONG',['../_win_types_8h.html#acaa7b8a7167a8214f499c71c413ddcca',1,'WinTypes.h']]],
+  ['longlong',['LONGLONG',['../_win_types_8h.html#ae7280f281da2560d38bd890220d80c2e',1,'WinTypes.h']]],
+  ['lowpart',['LowPart',['../union___l_a_r_g_e___i_n_t_e_g_e_r.html#a224a99ae36c78f2c7efaa62964b83fa4',1,'_LARGE_INTEGER']]],
+  ['lpbyte',['LPBYTE',['../_m_w_capture_extension_8h.html#a663f47bae29d2b7f6536027c931e0c59',1,'MWCaptureExtension.h']]],
+  ['lpfn_5faudio_5fcapture_5fcallback',['LPFN_AUDIO_CAPTURE_CALLBACK',['../_m_w_capture_extension_8h.html#a9461c969c8eefbf48deafe22813df9f0',1,'MWCaptureExtension.h']]],
+  ['lpfn_5fhot_5fplug_5fcallback',['LPFN_HOT_PLUG_CALLBACK',['../_m_w_u_s_b_capture_extension_8h.html#a5ea9f063860ed2546f97068d60fd630b',1,'MWUSBCaptureExtension.h']]],
+  ['lpfn_5fnotify_5fcallback',['LPFN_NOTIFY_CALLBACK',['../_m_w_capture_extension_8h.html#a2f3347afb6bce844dcb67b2cbaf12b7a',1,'MWCaptureExtension.h']]],
+  ['lpfn_5ftimer_5fcallback',['LPFN_TIMER_CALLBACK',['../_m_w_capture_extension_8h.html#a43da30dcf69d45ad8525c9d8ff68c18e',1,'MWCaptureExtension.h']]],
+  ['lpfn_5fvideo_5fcapture_5fcallback',['LPFN_VIDEO_CAPTURE_CALLBACK',['../_m_w_capture_extension_8h.html#a9e60b65b6762f49f8430ffa3dec63e52',1,'MWCaptureExtension.h']]],
+  ['lpvoid',['LPVOID',['../_m_w_capture_extension_8h.html#a085f5f68a0ee4ab24d9f3954a78e8063',1,'MWCaptureExtension.h']]]
+];

@@ -13,10 +13,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp \
+    main.cpp \
     serialport.cpp \
     interaction_controller.cpp \
-    gst_bus_poller.cpp
+    gst_bus_poller.cpp \
+    video-capture.cpp
 
 RESOURCES += qml.qrc
 
@@ -40,10 +41,22 @@ CONFIG += link_pkgconfig
 PKGCONFIG = \
     gstreamer-1.0
 
+# conf for Magewell SDK
+INCLUDEPATH += ../Magewell_Capture_SDK_Linux_3.3.1.813/Include
+LIBS+= -L../Magewell_Capture_SDK_Linux_3.3.1.813/Lib/x64/ -lMWCapture -ludev -lv4l2 -lasound
+QMAKE_CXXFLAGS += \
+          -Wno-unused-parameter \
+          -Wno-sign-compare \
+          -Wno-unused-variable \
+          -Wno-unused-but-set-variable \
+          -Wno-missing-field-initializers
+
 HEADERS += \
     serialport.h \
     interaction_controller.h \
-    gst_bus_poller.h
+    gst_bus_poller.h \
+    video-capture.h \
+    bitmap.h
 
 DISTFILES += \
     popup.qml

@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['video_5fcapture_5fclose_5fnum',['VIDEO_CAPTURE_CLOSE_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960aa7f85a300c3b309b0312097607145ac9',1,'MWLinux.h']]],
+  ['video_5fcapture_5fframe_5fnum',['VIDEO_CAPTURE_FRAME_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960aa84b3c2eb95d44db21c7a7ec6bd2ac75',1,'MWLinux.h']]],
+  ['video_5fcapture_5fopen_5fnum',['VIDEO_CAPTURE_OPEN_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960a0462d89ead4a76a0a12979f893f64cd9',1,'MWLinux.h']]],
+  ['video_5fcapture_5fstatus_5fnum',['VIDEO_CAPTURE_STATUS_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960a7b16ea365a4f4121552e03af43140d5e',1,'MWLinux.h']]],
+  ['video_5fclose_5fimage_5fnum',['VIDEO_CLOSE_IMAGE_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960a7a1bb47c280b69841eb20a35ea1b31bb',1,'MWLinux.h']]],
+  ['video_5fcreate_5fimage_5fnum',['VIDEO_CREATE_IMAGE_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960afaedb8797f6cd87cb9908e2bf2f2190b',1,'MWLinux.h']]],
+  ['video_5feco_5fcapture_5fclose_5fnum',['VIDEO_ECO_CAPTURE_CLOSE_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960afb14f24c8f5945af90c5adaad8064ad1',1,'MWLinux.h']]],
+  ['video_5feco_5fcapture_5fframe_5fnum',['VIDEO_ECO_CAPTURE_FRAME_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960aeacceae67a46360c6f2601fdb96c884b',1,'MWLinux.h']]],
+  ['video_5feco_5fcapture_5fget_5fsettings_5fnum',['VIDEO_ECO_CAPTURE_GET_SETTINGS_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960ab355c24e58505e4dbce9e2d6a019afbd',1,'MWLinux.h']]],
+  ['video_5feco_5fcapture_5fopen_5fnum',['VIDEO_ECO_CAPTURE_OPEN_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960a0d056bde0a33f860ddc0118a24f1dcd1',1,'MWLinux.h']]],
+  ['video_5feco_5fcapture_5fset_5fsettings_5fnum',['VIDEO_ECO_CAPTURE_SET_SETTINGS_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960aacabfd7907e7a989d381006b7b4ef45d',1,'MWLinux.h']]],
+  ['video_5feco_5fcapture_5fstatus_5fnum',['VIDEO_ECO_CAPTURE_STATUS_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960ae47991130bd239a2d24d096a9ad979fc',1,'MWLinux.h']]],
+  ['video_5finput_5fsource_5farray_5fnum',['VIDEO_INPUT_SOURCE_ARRAY_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960a15449794be926e4292ac61a22f544e10',1,'MWLinux.h']]],
+  ['video_5finput_5fsource_5fcount_5fnum',['VIDEO_INPUT_SOURCE_COUNT_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960a893b017584a142b4b5dacd8f1fe70fbd',1,'MWLinux.h']]],
+  ['video_5fopen_5fimage_5fnum',['VIDEO_OPEN_IMAGE_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960a259bc49ae98bd5eae8e00ca2a310c284',1,'MWLinux.h']]],
+  ['video_5fpin_5fbuffer_5fnum',['VIDEO_PIN_BUFFER_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960ac9106cbb0f44f826a3986bb5678270c5',1,'MWLinux.h']]],
+  ['video_5fsync_5fall',['VIDEO_SYNC_ALL',['../_m_w_capture_extension_8h.html#a1e4d1260da7fe9b98bca880ca8dc100da0aaa485346eaeaf7526d0422eba36939',1,'MWCaptureExtension.h']]],
+  ['video_5fsync_5fcs',['VIDEO_SYNC_CS',['../_m_w_capture_extension_8h.html#a1e4d1260da7fe9b98bca880ca8dc100da350c0887cd2116bc50fa5a60c2192eb9',1,'MWCaptureExtension.h']]],
+  ['video_5fsync_5fembedded',['VIDEO_SYNC_EMBEDDED',['../_m_w_capture_extension_8h.html#a1e4d1260da7fe9b98bca880ca8dc100da5b57900b1c06eca30599657f67225cef',1,'MWCaptureExtension.h']]],
+  ['video_5fsync_5fhs_5fvs',['VIDEO_SYNC_HS_VS',['../_m_w_capture_extension_8h.html#a1e4d1260da7fe9b98bca880ca8dc100da324e34a3678ac3173e9d4d1d5c168f43',1,'MWCaptureExtension.h']]],
+  ['video_5funpin_5fbuffer_5fnum',['VIDEO_UNPIN_BUFFER_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960af348506abadcaac80355566d6434bc9b',1,'MWLinux.h']]],
+  ['video_5fupload_5fimage_5fnum',['VIDEO_UPLOAD_IMAGE_NUM',['../_m_w_linux_8h.html#af9bdc3014f3d54c426b6d2df10de4960a64da67dafc8d9913907e067ce12595e3',1,'MWLinux.h']]]
+];
