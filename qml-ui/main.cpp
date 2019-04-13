@@ -30,8 +30,8 @@ int main(int argc, char *argv[])
            //"format", G_TYPE_STRING, "ARGB",
            "framerate", GST_TYPE_FRACTION, 15, 1,
            "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
-           //"width", G_TYPE_INT, 800,
-           //"height", G_TYPE_INT, 600,
+           "width", G_TYPE_INT, 800,
+           "height", G_TYPE_INT, 600,
            NULL);
     g_object_set(capsfilter, "caps", caps, nullptr);
 

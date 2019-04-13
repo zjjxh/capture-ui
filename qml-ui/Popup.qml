@@ -10,6 +10,7 @@ Window {
     height: 200
     SystemPalette { id: palette }
     title: qsTr("Capture directory")
+    property string basedir: "./"
 
     Button {
            id:openBtn
@@ -21,34 +22,33 @@ Window {
            onClicked: {
                fds.open();
            }
-       }
-       TextField {
-           id: labels
-           y: 48
-           width: 239
-           height: 24
-           text:qsTr("")
-           clip: true
-           anchors.left:openBtn.right
-           anchors.leftMargin: 6
+   }
+
+   TextField {
+       id: labels
+       y: 48
+       width: 239
+       height: 24
+       text:"./"
+       clip: true
+       anchors.left:openBtn.right
+       anchors.leftMargin: 6
+   }
+
+   FileDialog {
+       id:fds
+       title: qsTr("Select")
+       folder: shortcuts.home
+       selectExisting: true
+       selectFolder: true
+       selectMultiple: false
+       onAccepted: {
+           basedir = labels.text = fds.fileUrl
+           console.log("You chose: " + fds.fileUrl);
        }
 
-       FileDialog {
-           id:fds
-           title: "Select"
-           folder: shortcuts.home
-           selectExisting: true
-           selectFolder: true
-           selectMultiple: false
-           onAccepted: {
-               labels.text = fds.fileUrl;
-               console.log("You chose: " + fds.fileUrl);
-           }
-
-           onRejected: {
-               //labels.text = "";
-               console.log("Canceled");
-           }
-
+       onRejected: {
+           console.log("Canceled");
        }
+   }
 }
