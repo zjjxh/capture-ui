@@ -4,7 +4,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 1.4 as Controls14
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.4 as Styles
-//import org.freedesktop.gstreamer.GLVideoItem 1.0
+import org.freedesktop.gstreamer.GLVideoItem 1.0
 
 ApplicationWindow {
     visible: true
@@ -35,14 +35,13 @@ ApplicationWindow {
             Item {
                 width: 600
                 anchors.fill: parent
-                /*
                 GstGLVideoItem {
                     id: videoItem
                     objectName: "videoItem"
                     anchors.centerIn: parent
                     width: parent.width
                     height: parent.height
-                }*/
+                }
             }
 
         }
@@ -161,17 +160,22 @@ ApplicationWindow {
                 height: 48
                 text: "Capture"
                 property string fname
-                signal capture_image(int index, string base, int cnt, bool needbmp)
+                signal capture_image(int index, string base, int cnt, bool needbmp, string cslabel)
 
                 function image_meta(dwfourcc, width, height, cs_id) {
-                    var str = "auto detect fourcc:"+dwfourcc+" width*height:"+width+"*"+height+" colorsapce:"+colorspace.textAt(cs_id)
-                     console.log("capture-done:"+str)
-                     console.log("fname:"+fname)
+
+                     //console.log("capture-done:"+str)
+                     //console.log("fname:"+fname)
                      colorspace.currentIndex = cs_id
                      cclabel.text = dwfourcc
                      resollabel.text = width + "*" + height
-                     //if(cslabel.text && colorspace.textAt(cs_id) != cslabel.text)
+                     if(cslabel.text && colorspace.textAt(cs_id) != cslabel.text)
                      {
+                        var str = "user input cs:"+cslabel.text+'\n'
+                        str += "current cs:"+colorspace.textAt(cs_id)+'\n'
+                        str += "current width*height:"+width+"*"+height+'\n'
+                        str += "current fourcc:"+dwfourcc+'\n'
+                        mbox.close()
                         mbox.get_diag_message(str)
                         mbox.show()
                      }
@@ -189,7 +193,7 @@ ApplicationWindow {
                                   Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss:zzz")+
                                   namelabel.text,
                                   1,
-                                  savefile.currentIndex)
+                                  savefile.currentIndex, cslabel.text)
                 }
             }
 

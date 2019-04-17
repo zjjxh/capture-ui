@@ -20,7 +20,7 @@ signals:
 	// none at that point
 public slots:
     void select_src(QString src);       // triggered when the user select-input-src
-    void capture_image(int, QString, int, bool);
+    void capture_image(int, QString, int, bool, QString);
     void get_fresh();
     void get_detail();
 private:
