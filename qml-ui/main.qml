@@ -4,7 +4,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 1.4 as Controls14
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.4 as Styles
-import org.freedesktop.gstreamer.GLVideoItem 1.0
+//import org.freedesktop.gstreamer.GLVideoItem 1.0
 
 ApplicationWindow {
     visible: true
@@ -12,6 +12,7 @@ ApplicationWindow {
     height: 600
     title: qsTr("Capture Demo")
     Popup{ id:pwin}
+    Messbox{ id:mbox}
 
     menuBar: MenuBar {
         Menu {
@@ -30,17 +31,18 @@ ApplicationWindow {
             width: 600
             Layout.fillWidth: true;
             Layout.minimumWidth: 560
-            color: "black"
+            //color: "black"
             Item {
                 width: 600
                 anchors.fill: parent
+                /*
                 GstGLVideoItem {
                     id: videoItem
                     objectName: "videoItem"
                     anchors.centerIn: parent
                     width: parent.width
                     height: parent.height
-                }
+                }*/
             }
 
         }
@@ -79,12 +81,13 @@ ApplicationWindow {
                 font.pixelSize: 12
             }
 
-            Label {
+            TextField {
                 id: cclabel
-                x: 87
-                y: 147
-                width: 79
-                height: 22
+                x: 85
+                y: 143
+                width: 77
+                height: 25
+                readOnly: true
                 text: qsTr("")
             }
 
@@ -98,12 +101,13 @@ ApplicationWindow {
                 font.pixelSize: 12
             }
 
-            Label {
+            TextField {
                 id: resollabel
-                x: 107
-                y: 187
+                x: 104
+                y: 182
                 width: 77
-                height: 22
+                height: 25
+                readOnly: true
                 text: qsTr("")
             }
 
@@ -121,7 +125,7 @@ ApplicationWindow {
             ComboBox {
                 id: savefile
                 x: 26
-                y: 352
+                y: 414
                 model: ["RAW", "RAW+BMP"]
                 width: 140
                 height: 30
@@ -130,19 +134,21 @@ ApplicationWindow {
             Text {
                 id: name
                 x: 32
-                y: 307
+                y: 369
                 width: 48
                 height: 22
                 text: qsTr("Name:")
                 font.pixelSize: 12
             }
 
-            Label {
+            TextField {
                 id: namelabel
-                x: 90
-                y: 307
-                width: 71
-                height: 21
+                x: 76
+                y: 369
+                width: 77
+                height: 25
+                anchors.top: parent.top
+                anchors.topMargin: 365
                 text: qsTr("")
             }
 
@@ -150,20 +156,37 @@ ApplicationWindow {
                 id: capture
                 objectName: "capture-btn"
                 x: 51
-                y: 406
+                y: 468
                 width: 72
                 height: 48
                 text: "Capture"
+                property string fname
                 signal capture_image(int index, string base, int cnt, bool needbmp)
 
                 function image_meta(dwfourcc, width, height, cs_id) {
-                    console.log("capture-done")
+                    var str = "auto detect fourcc:"+dwfourcc+" width*height:"+width+"*"+height+" colorsapce:"+colorspace.textAt(cs_id)
+                     console.log("capture-done:"+str)
+                     console.log("fname:"+fname)
+                     colorspace.currentIndex = cs_id
+                     cclabel.text = dwfourcc
+                     resollabel.text = width + "*" + height
+                     //if(cslabel.text && colorspace.textAt(cs_id) != cslabel.text)
+                     {
+                        mbox.get_diag_message(str)
+                        mbox.show()
+                     }
+
                 }
 
                 onClicked: {
+                    fname = pwin.basedir+
+                            Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss:zzz")+
+                            namelabel.text
+                    console.log("fname:"+fname)
+
                     capture_image(videoinputsrc.currentIndex,
                                   pwin.basedir+
-                                  Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss.zzz")+
+                                  Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss:zzz")+
                                   namelabel.text,
                                   1,
                                   savefile.currentIndex)
@@ -172,26 +195,65 @@ ApplicationWindow {
 
             RoundButton {
                 id: fresh
+                objectName: "fresh-btn"
                 x: 26
                 y: 234
                 width: 72
                 height: 48
                 text: "Fresh"
+                signal get_fresh()
+                onClicked: {
+                    console.log("fresh")
+                    get_fresh()
+                }
+                function fresh_meta(dwfourcc, width, height, cs_id) {
+                    colorspace.currentIndex = cs_id
+                    cclabel.text = dwfourcc
+                    resollabel.text = width + "*" + height
+                }
             }
 
             RoundButton {
                 id: detail
-                objectName: "detail-button"
+                objectName: "detail-btn"
                 x: 107
                 y: 234
                 width: 72
                 height: 48
                 text: "Detail"
-                function show_detail(str) {
-                    mbox.text = str;
-                    mbox.show();
+                signal get_detail()
+                onClicked: {
+                    console.log("detail")
+                    get_detail()
                 }
+                function detail_meta(str) {
+                    mbox.get_diag_message(str)
+                    mbox.show()
+                }
+            }
+
+            Text {
+                id: inputcs
+                x: 32
+                y: 320
+                width: 48
+                height: 22
+                text: qsTr("InputCs:")
+                //font.pixelSize:122
+            }
+
+            TextField {
+                id: cslabel
+                x: 88
+                y: 321
+                width: 77
+                height: 25
+                anchors.top: parent.top
+                anchors.topMargin: 314
+                text: qsTr("")
             }
         }
     }
 }
+
+

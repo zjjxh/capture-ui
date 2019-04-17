@@ -59,4 +59,5 @@ HEADERS += \
     bitmap.h
 
 DISTFILES += \
-    popup.qml
+    Popup.qml \
+    Messbox.qml

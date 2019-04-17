@@ -8,6 +8,6 @@
         <file>icons/ic_backward.png</file>
         <file>icons/ic_forward.png</file>
         <file>icons/ic_media_pause.png</file>
-        <file>messbox.qml</file>
+        <file>Messbox.qml</file>
     </qresource>
 </RCC>
