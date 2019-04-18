@@ -61,14 +61,14 @@ m_RootObject(window) {
     Q_ASSERT(NULL != m_Capturebtn);
     m_Freshbtn = parent()->findChild<QQuickItem *>("fresh-btn");
     Q_ASSERT(NULL != m_Freshbtn);
-    m_Detailbtn = parent()->findChild<QQuickItem *>("detail-btn");
-    Q_ASSERT(NULL != m_Detailbtn);
+    //m_Detailbtn = parent()->findChild<QQuickItem *>("detail-btn");
+    //Q_ASSERT(NULL != m_Detailbtn);
     QObject::connect(m_Capturebtn, SIGNAL(capture_image(int, QString, int, bool, QString)), this,
                      SLOT(capture_image(int, QString, int, bool, QString)));
     QObject::connect(m_Freshbtn, SIGNAL(get_fresh()), this,
                      SLOT(get_fresh()));
-    QObject::connect(m_Detailbtn, SIGNAL(get_detail()), this,
-                     SLOT(get_detail()));
+    //QObject::connect(m_Detailbtn, SIGNAL(get_detail()), this,
+    //                 SLOT(get_detail()));
 }
 
 InteractionController::~InteractionController() {
@@ -88,9 +88,9 @@ void InteractionController::get_fresh(){
                               Q_ARG(QVariant, get_capture_cs_id()));		
 }
 
-void InteractionController::get_detail(){
+/*void InteractionController::get_detail(){
     QMetaObject::invokeMethod(m_Detailbtn, "detail_meta", Q_ARG(QVariant, get_capture_inputinfo()));
-}
+}*/
 
 void InteractionController::capture_image(int card, QString base, int cnt, bool need_bmp, QString cslabel) {
     fresh_capture(card, base.toLatin1().data(), cnt, need_bmp);

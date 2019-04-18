@@ -4,6 +4,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 1.4 as Controls14
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.4 as Styles
+import QtQuick.Dialogs 1.1
 import org.freedesktop.gstreamer.GLVideoItem 1.0
 
 ApplicationWindow {
@@ -11,7 +12,7 @@ ApplicationWindow {
     width: 800
     height: 600
     title: qsTr("Capture Demo")
-    Popup{ id:pwin }
+    //Popup{ id:pwin }
     Messbox{ id:mbox }
 /*
     menuBar: MenuBar {
@@ -52,8 +53,9 @@ ApplicationWindow {
                 id:videoinputsrc
                 objectName: "video-input-src"
                 anchors.horizontalCenterOffset: 0
-                y: 20
+                y: 24
                 width: 100
+                height: 25
                 model: ["HDMI 4K", "SDI 4K", "MISC"]
                 anchors.horizontalCenter:  parent.horizontalCenter
                 signal inputSrc(string src)
@@ -71,7 +73,7 @@ ApplicationWindow {
             Text {
                 id: fourcc
                 x: 32
-                y: 148
+                y: 122
                 width: 48
                 height: 22
                 text: qsTr("FourCC:")
@@ -81,7 +83,7 @@ ApplicationWindow {
             TextField {
                 id: cclabel
                 x: 85
-                y: 143
+                y: 117
                 width: 77
                 height: 25
                 readOnly: true
@@ -91,7 +93,7 @@ ApplicationWindow {
             Text {
                 id: resolution
                 x: 32
-                y: 187
+                y: 173
                 width: 48
                 height: 22
                 text: qsTr("Resolution:")
@@ -101,59 +103,40 @@ ApplicationWindow {
             TextField {
                 id: resollabel
                 x: 104
-                y: 182
+                y: 168
                 width: 77
                 height: 25
                 readOnly: true
                 text: qsTr("")
             }
 
-            ComboBox {
+            Controls14.ComboBox {
                 id: colorspace
-                x: 30
-                y: 84
+                x: 50
+                y: 68
                 model: ["NTSC_1953", "PAL_1970","NTSC_1987","ITU601","ITU601_5",
                         "sRGB","ITU709","ITU709_5","ITU709_7","xvYCC601","xvYCC709",
                         "sYCC601","opYCC601","opRGB","DCI_P3","ITU2020","ITU2020C"]
-                width: 140
-                height: 35
-            }
-
-            ComboBox {
-                id: savefile
-                x: 26
-                y: 414
-                model: ["RAW", "RAW+BMP"]
-                width: 140
-                height: 30
-            }
-
-            Text {
-                id: name
-                x: 32
-                y: 369
-                width: 48
-                height: 22
-                text: qsTr("Name:")
-                font.pixelSize: 12
+                width: 107
+                height: 25
             }
 
             TextField {
                 id: namelabel
-                x: 76
+                x: 73
                 y: 369
-                width: 77
-                height: 25
+                width: 114
+                height: 29
                 anchors.top: parent.top
-                anchors.topMargin: 365
-                text: qsTr("")
+                anchors.topMargin: 344
+                text: "./"
             }
 
             RoundButton {
                 id: capture
                 objectName: "capture-btn"
-                x: 51
-                y: 468
+                x: 68
+                y: 405
                 width: 72
                 height: 48
                 text: "Capture"
@@ -181,25 +164,23 @@ ApplicationWindow {
                 }
 
                 onClicked: {
-                    fname = pwin.basedir+
-                            Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss:zzz")+
-                            namelabel.text
+                    fname = namelabel.text+
+                            Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss:zzz")
                     console.log("fname:"+fname)
 
                     capture_image(videoinputsrc.currentIndex,
-                                  pwin.basedir+
-                                  Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss:zzz")+
-                                  namelabel.text,
+                                  namelabel.text+
+                                  Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss:zzz"),
                                   1,
-                                  savefile.currentIndex, cslabel.text)
+                                  1, cslabel.text)
                 }
             }
 
             RoundButton {
                 id: fresh
                 objectName: "fresh-btn"
-                x: 26
-                y: 234
+                x: 68
+                y: 219
                 width: 72
                 height: 48
                 text: "Fresh"
@@ -215,7 +196,7 @@ ApplicationWindow {
                 }
             }
 
-            RoundButton {
+            /*RoundButton {
                 id: detail
                 objectName: "detail-btn"
                 x: 107
@@ -232,13 +213,13 @@ ApplicationWindow {
                     mbox.get_diag_message(str)
                     mbox.show()
                 }
-            }
+            }*/
 
             Text {
                 id: inputcs
-                x: 32
-                y: 320
-                width: 48
+                x: 38
+                y: 293
+                width: 52
                 height: 22
                 text: qsTr("InputCs:")
                 //font.pixelSize:122
@@ -246,16 +227,43 @@ ApplicationWindow {
 
             TextField {
                 id: cslabel
-                x: 88
+                x: 94
                 y: 321
                 width: 77
                 height: 25
                 anchors.top: parent.top
-                anchors.topMargin: 314
+                anchors.topMargin: 289
                 text: qsTr("")
+            }
+            Button {
+                id: button
+                x: 19
+                y: 343
+                width: 53
+                height: 30
+                text: qsTr("Open:")
+                onClicked: {
+                    fds.open();
+                }
+            }
+            FileDialog {
+                id:fds
+                title: qsTr("Select")
+                folder: shortcuts.home
+                selectExisting: true
+                selectFolder: true
+                selectMultiple: false
+                onAccepted: {
+                    namelabel.text = fds.fileUrl + "/"
+                    namelabel.text = namelabel.text.substring(7, fds.fileUrl.length)
+                    console.log("You chose: " + fds.fileUrl);
+                }
+
+                onRejected: {
+                    console.log("Canceled");
+                }
             }
         }
     }
 }
-
 

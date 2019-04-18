@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "serialport.h"
+#include <QSharedMemory>
 
 // gstreamer includes
 #include <gst/gst.h>
@@ -16,6 +17,13 @@ int main(int argc, char *argv[])
     InteractionController * interactionController;
     GstBusPoller * srcPipelinePoller;
     qputenv("GST_DEBUG", "3");
+
+    QSharedMemory shared("demo");//随便填个名字就行
+    if (shared.attach())
+    {
+            return 0;
+    }
+    shared.create(1);
 
     gst_init(&argc, &argv);
 

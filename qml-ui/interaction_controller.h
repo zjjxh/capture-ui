@@ -22,14 +22,14 @@ public slots:
     void select_src(QString src);       // triggered when the user select-input-src
     void capture_image(int, QString, int, bool, QString);
     void get_fresh();
-    void get_detail();
+    //void get_detail();
 private:
 	GstElement *m_GstPlayer;
     GstElement *m_GstSrc;
     QQuickItem *m_SelectSrc;
     QQuickItem *m_Capturebtn;
     QQuickItem *m_Freshbtn;
-    QQuickItem *m_Detailbtn;
+    //QQuickItem *m_Detailbtn;
 	QQuickWindow *m_RootObject;
 };
 
