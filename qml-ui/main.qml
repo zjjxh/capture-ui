@@ -48,12 +48,12 @@ ApplicationWindow {
             Layout.minimumWidth: 200
             Layout.maximumWidth: 200
             color: "whitesmoke"
-            ComboBox {
+            Controls14.ComboBox {
                 id:videoinputsrc
                 objectName: "video-input-src"
-                y: 22
-                height: 35
                 anchors.horizontalCenterOffset: 0
+                y: 20
+                width: 100
                 model: ["HDMI 4K", "SDI 4K", "MISC"]
                 anchors.horizontalCenter:  parent.horizontalCenter
                 signal inputSrc(string src)
