@@ -11,29 +11,27 @@ ApplicationWindow {
     width: 800
     height: 600
     title: qsTr("Capture Demo")
-    Popup{ id:pwin}
-    Messbox{ id:mbox}
-
+    Popup{ id:pwin }
+    Messbox{ id:mbox }
+/*
     menuBar: MenuBar {
         Menu {
-            title: "Edit"
-            MenuItem { text: "Setting"
-                onClicked: pwin.show();
+            title: qsTr("Edit")
+            MenuItem {
+                text: qsTr("Setting")
+                onClicked: pwin.show()
             }
         }
     }
+    */
 
     Controls14.SplitView{
         anchors.fill:parent;
         orientation: Qt.Horizontal;
         Rectangle{
-            id:rect1;
-            width: 600
             Layout.fillWidth: true;
-            Layout.minimumWidth: 560
-            //color: "black"
+            color: "black"
             Item {
-                width: 600
                 anchors.fill: parent
                 GstGLVideoItem {
                     id: videoItem
@@ -47,9 +45,9 @@ ApplicationWindow {
         }
 
         Rectangle{
-            id:rect2;
-            x: 599
-            width: 200
+            Layout.minimumWidth: 200
+            Layout.maximumWidth: 200
+            color: "whitesmoke"
             ComboBox {
                 id:videoinputsrc
                 objectName: "video-input-src"
