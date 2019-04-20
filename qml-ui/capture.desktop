@@ -1,0 +1,13 @@
+[Desktop Entry]
+
+Type=Application
+
+Name=Capture
+
+Icon=/home/hobby/qt/capture-ui/build-test-Desktop-Debug/logo.ico
+
+Exec=/home/hobby/qt/capture-ui/build-test-Desktop-Debug/test
+
+Terminal=false
+
+Categories=Development
