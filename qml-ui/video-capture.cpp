@@ -14,9 +14,9 @@
 static bool b_st352 = false;
 static SMPTE_ST352_PAYLOAD_ID u_st352 = {0};
 
-bool isRGB = false;
-bool isCheckSDI = false;/*6G or above SDI need.*/
-bool isCheckHDMI = false;
+static bool isRGB = false;
+static bool isCheckSDI = false;/*6G or above SDI need.*/
+static bool isCheckHDMI = false;
 
 static MWCAP_VIDEO_COLOR_FORMAT capture_colorfmt = MWCAP_VIDEO_COLOR_FORMAT_UNKNOWN;
 static MWCAP_VIDEO_QUANTIZATION_RANGE capture_range = MWCAP_VIDEO_QUANTIZATION_UNKNOWN;
@@ -24,7 +24,7 @@ static MWCAP_VIDEO_QUANTIZATION_RANGE capture_range = MWCAP_VIDEO_QUANTIZATION_U
 static int capture_width = 0;
 static int capture_height = 0;
 static DWORD capture_fourcc = 0;
-static CS_ID capture_cs_id = NTSC_1953;
+static CS_ID capture_cs_id = CS_UNKNOWN;
 static char video_signal_info[8192] = {0};
 
 uint32_t get_capture_fourcc()
@@ -33,11 +33,11 @@ uint32_t get_capture_fourcc()
 }
 uint32_t get_capture_width()
 {
-    return capture_width;
+    return static_cast<uint32_t>(capture_width);
 }
 uint32_t get_capture_height()
 {
-    return capture_height;
+    return static_cast<uint32_t>(capture_height);
 }
 uint32_t get_capture_cs_id()
 {
@@ -227,7 +227,7 @@ static MW_RESULT PrintInputVideo(HCHANNEL hChannel)
         GetSaturationString(signalStatus.satRange, szSaturation);
 
         char szScanningType[16];
-        float fFrameRate;
+        double fFrameRate;
         if (signalStatus.bSegmentedFrame) {
             strcpy(szScanningType, "sF");
             fFrameRate = 1.0 * 10000000 / signalStatus.dwFrameDuration;
@@ -303,12 +303,10 @@ static void PrintInputSDI(MWCAP_INPUT_SPECIFIC_STATUS specificStatus)
         isCheckSDI = true;
         szSdiType = "6G Mode 1";
         break;
-    case SDI_TYPE_6G_MODE2:
-        isCheckSDI = true;
-        szSdiType = "6G Mode 2";
-        break;
+    //case SDI_TYPE_6G_MODE2:
     default:
         isCheckSDI = true;
+        szSdiType = "6G Mode 2";
         break;
     }
 
@@ -638,6 +636,7 @@ static MW_RESULT PrintInputSpecific(HCHANNEL hChannel)
                 break;
             case MWCAP_VIDEO_INPUT_TYPE_YC:
                 PrintInputCvbsYc(specificStatus);
+                break;
             default:
                 break;
             }
@@ -726,19 +725,27 @@ static void check_sdi(HCHANNEL hChannel)
 
 static void get_and_guess_misc_capture_param(HCHANNEL hChannel)
 {
-        PrintInputCommon(hChannel);
-        PrintInputVideo(hChannel);
-        PrintInputSpecific(hChannel);
-        printf("%s", video_signal_info);
-        printf("%dx%d\n", capture_width, capture_height);
-        if (isCheckHDMI) {
-            isCheckHDMI = false;
-            check_hdmi(hChannel);
-        }
-        if (isCheckSDI) {
-            isCheckSDI = false;
-            check_sdi(hChannel);
-        }
+    b_st352 = false;
+    u_st352 = {0};
+    isRGB = false;
+    isCheckSDI = false;/*6G or above SDI need.*/
+    isCheckHDMI = false;
+    capture_colorfmt = MWCAP_VIDEO_COLOR_FORMAT_UNKNOWN;
+    capture_range = MWCAP_VIDEO_QUANTIZATION_UNKNOWN;
+    capture_width = 0;
+    capture_height = 0;
+    capture_fourcc = 0;
+    capture_cs_id = CS_UNKNOWN;
+    video_signal_info[0] = 0;
+
+    PrintInputCommon(hChannel);
+    PrintInputVideo(hChannel);
+    PrintInputSpecific(hChannel);
+    printf("%s", video_signal_info);
+    if (isCheckHDMI)
+        check_hdmi(hChannel);
+    if (isCheckSDI)
+        check_sdi(hChannel);
 }
 
 static HCHANNEL open_channel(int nDevIndex)
@@ -913,10 +920,10 @@ void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp)
         printf("Open channel - BoardIndex = %X, ChannelIndex = %d.\n", videoInfo.byBoardIndex, videoInfo.byChannelIndex);
         printf("Product Name: %s\n", videoInfo.szProductName);
         printf("Board SerialNo: %s\n\n", videoInfo.szBoardSerialNo);
-        // Capture frames on input signal frequency
 
         //check print and setting
         get_and_guess_misc_capture_param(hChannel);
+
         if (cnt)
             capture_frames(hChannel, capture_width, capture_height, capture_fourcc,
                     capture_colorfmt, capture_range, cnt, base, false);

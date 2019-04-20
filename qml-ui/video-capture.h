@@ -4,7 +4,8 @@
 #include <stdint.h>
 
 typedef enum _COLORSPACE_ID {
-    NTSC_1953 = 0,
+    CS_UNKNOWN = 0,
+    NTSC_1953,
     PAL_1970,
     NTSC_1987,
     ITU601,
@@ -24,6 +25,7 @@ typedef enum _COLORSPACE_ID {
 } CS_ID;
 
 static const char *const CS_NAME[] = {
+    "Unknown",
     "NTSC-1953",
     "PAL/SECAM-1970",
     "NTSC-1987/SMPTE 170M-1",
