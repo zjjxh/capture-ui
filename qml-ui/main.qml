@@ -23,6 +23,7 @@ ApplicationWindow {
             Item {
                 anchors.fill: parent
                 GstGLVideoItem {
+                //Item {
                     id: videoItem
                     objectName: "videoItem"
                     anchors.centerIn: parent
@@ -97,25 +98,25 @@ ApplicationWindow {
                 readOnly: true
                 text: qsTr("")
             }
-
-            TextField {
-                id: namelabel
-                x: 19
+            TextArea {
+                x: 8
                 y: 369
-                width: 159
-                height: 29
+                width: 184
+                height: 95
                 anchors.top: parent.top
-                anchors.topMargin: 433
+                anchors.topMargin: 427
+                id: namelabel
+                wrapMode: TextArea.WrapAnywhere
                 text: "./"
             }
 
             Controls14.Button {
                 id: capture
                 objectName: "capture-btn"
-                x: 106
-                y: 482
+                x: 120
+                y: 535
                 width: 72
-                height: 27
+                height: 29
                 text: "Capture"
                 property string fname
                 signal capture_image(int index, string base, int cnt, bool needbmp, string cslabel)
@@ -156,8 +157,8 @@ ApplicationWindow {
             Controls14.Button {
                 id: fresh
                 objectName: "fresh-btn"
-                x: 19
-                y: 480
+                x: 8
+                y: 535
                 width: 72
                 height: 29
                 text: "Fresh"
@@ -194,11 +195,11 @@ ApplicationWindow {
             }
             Controls14.Button {
                 id: button
-                x: 19
+                x: 8
                 y: 391
-                width: 53
+                width: 107
                 height: 30
-                text: qsTr("Open:")
+                text: qsTr("Open File Path:")
                 onClicked: {
                     fds.open();
                 }
