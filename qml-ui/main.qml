@@ -42,7 +42,7 @@ ApplicationWindow {
                 id:videoinputsrc
                 objectName: "video-input-src"
                 anchors.horizontalCenterOffset: 0
-                y: 24
+                y: 17
                 width: 140
                 height: 25
                 model: ["HDMI-4K-Input", "SDI-4K-Input", "Misc-Input"]
@@ -62,7 +62,7 @@ ApplicationWindow {
             Text {
                 id: fourcc
                 x: 30
-                y: 78
+                y: 53
                 width: 140
                 height: 22
                 text: qsTr("Pixel Format:")
@@ -72,7 +72,7 @@ ApplicationWindow {
             TextField {
                 id: cclabel
                 x: 30
-                y: 100
+                y: 68
                 width: 140
                 height: 25
                 readOnly: true
@@ -82,7 +82,7 @@ ApplicationWindow {
             Text {
                 id: resolution
                 x: 30
-                y: 146
+                y: 107
                 width: 140
                 height: 22
                 text: qsTr("Resolution:")
@@ -92,7 +92,7 @@ ApplicationWindow {
             TextField {
                 id: resollabel
                 x: 30
-                y: 166
+                y: 123
                 width: 140
                 height: 25
                 readOnly: true
@@ -105,7 +105,7 @@ ApplicationWindow {
                 width: 184
                 height: 95
                 anchors.top: parent.top
-                anchors.topMargin: 427
+                anchors.topMargin: 327
                 id: namelabel
                 wrapMode: TextArea.WrapAnywhere
                 text: "./"
@@ -116,7 +116,7 @@ ApplicationWindow {
                 id: capture
                 objectName: "capture-btn"
                 x: 120
-                y: 535
+                y: 434
                 width: 72
                 height: 29
                 text: "Capture"
@@ -160,7 +160,7 @@ ApplicationWindow {
                 id: fresh
                 objectName: "fresh-btn"
                 x: 8
-                y: 535
+                y: 434
                 width: 72
                 height: 29
                 text: "Fresh"
@@ -179,8 +179,8 @@ ApplicationWindow {
             Text {
                 id: inputcs
                 x: 30
-                y: 222
-                width: 135
+                y: 162
+                width: 140
                 height: 22
                 text: qsTr("Color Space:")
             }
@@ -192,13 +192,13 @@ ApplicationWindow {
                 width: 140
                 height: 25
                 anchors.top: parent.top
-                anchors.topMargin: 314
+                anchors.topMargin: 236
                 text: qsTr("")
             }
             Controls14.Button {
                 id: button
                 x: 8
-                y: 391
+                y: 292
                 width: 107
                 height: 29
                 text: qsTr("Open File Path:")
@@ -227,8 +227,8 @@ ApplicationWindow {
             Text {
                 id: inputcs1
                 x: 30
-                y: 289
-                width: 135
+                y: 219
+                width: 140
                 height: 22
                 text: qsTr("Custom Color Space:")
             }
@@ -240,7 +240,7 @@ ApplicationWindow {
                 width: 140
                 height: 25
                 text: qsTr("")
-                anchors.topMargin: 241
+                anchors.topMargin: 178
                 anchors.top: parent.top
                 readOnly: true
             }
