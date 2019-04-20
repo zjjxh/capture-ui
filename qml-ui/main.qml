@@ -12,19 +12,7 @@ ApplicationWindow {
     width: 800
     height: 600
     title: qsTr("Capture Demo")
-    //Popup{ id:pwin }
     Messbox{ id:mbox }
-/*
-    menuBar: MenuBar {
-        Menu {
-            title: qsTr("Edit")
-            MenuItem {
-                text: qsTr("Setting")
-                onClicked: pwin.show()
-            }
-        }
-    }
-    */
 
     Controls14.SplitView{
         anchors.fill:parent;
@@ -54,9 +42,9 @@ ApplicationWindow {
                 objectName: "video-input-src"
                 anchors.horizontalCenterOffset: 0
                 y: 24
-                width: 100
+                width: 140
                 height: 25
-                model: ["HDMI 4K", "SDI 4K", "MISC"]
+                model: ["HDMI-4K-Input", "SDI-4K-Input", "Misc-Input"]
                 anchors.horizontalCenter:  parent.horizontalCenter
                 signal inputSrc(string src)
                 function trigger() {
@@ -72,19 +60,19 @@ ApplicationWindow {
 
             Text {
                 id: fourcc
-                x: 32
-                y: 122
-                width: 48
+                x: 30
+                y: 78
+                width: 140
                 height: 22
-                text: qsTr("FourCC:")
+                text: qsTr("Pixel Format:")
                 font.pixelSize: 12
             }
 
             TextField {
                 id: cclabel
-                x: 85
-                y: 117
-                width: 77
+                x: 30
+                y: 100
+                width: 141
                 height: 25
                 readOnly: true
                 text: qsTr("")
@@ -92,9 +80,9 @@ ApplicationWindow {
 
             Text {
                 id: resolution
-                x: 32
-                y: 173
-                width: 48
+                x: 30
+                y: 146
+                width: 140
                 height: 22
                 text: qsTr("Resolution:")
                 font.pixelSize: 12
@@ -102,43 +90,32 @@ ApplicationWindow {
 
             TextField {
                 id: resollabel
-                x: 104
-                y: 168
-                width: 77
+                x: 30
+                y: 166
+                width: 140
                 height: 25
                 readOnly: true
                 text: qsTr("")
             }
 
-            Controls14.ComboBox {
-                id: colorspace
-                x: 50
-                y: 68
-                model: ["NTSC_1953", "PAL_1970","NTSC_1987","ITU601","ITU601_5",
-                        "sRGB","ITU709","ITU709_5","ITU709_7","xvYCC601","xvYCC709",
-                        "sYCC601","opYCC601","opRGB","DCI_P3","ITU2020","ITU2020C"]
-                width: 107
-                height: 25
-            }
-
             TextField {
                 id: namelabel
-                x: 73
+                x: 19
                 y: 369
-                width: 114
+                width: 159
                 height: 29
                 anchors.top: parent.top
-                anchors.topMargin: 344
+                anchors.topMargin: 433
                 text: "./"
             }
 
-            RoundButton {
+            Controls14.Button {
                 id: capture
                 objectName: "capture-btn"
-                x: 68
-                y: 405
+                x: 106
+                y: 482
                 width: 72
-                height: 48
+                height: 27
                 text: "Capture"
                 property string fname
                 signal capture_image(int index, string base, int cnt, bool needbmp, string cslabel)
@@ -147,13 +124,13 @@ ApplicationWindow {
 
                      //console.log("capture-done:"+str)
                      //console.log("fname:"+fname)
-                     colorspace.currentIndex = cs_id
+                     cs_detect.text = "tmp"
                      cclabel.text = dwfourcc
                      resollabel.text = width + "*" + height
-                     if(cslabel.text && colorspace.textAt(cs_id) != cslabel.text)
+                     if (cslabel.text && cs_detect.text != cslabel.text)
                      {
                         var str = "user input cs:"+cslabel.text+'\n'
-                        str += "current cs:"+colorspace.textAt(cs_id)+'\n'
+                        str += "current cs:"+cs_detect.text+'\n'
                         str += "current width*height:"+width+"*"+height+'\n'
                         str += "current fourcc:"+dwfourcc+'\n'
                         mbox.close()
@@ -176,13 +153,13 @@ ApplicationWindow {
                 }
             }
 
-            RoundButton {
+            Controls14.Button {
                 id: fresh
                 objectName: "fresh-btn"
-                x: 68
-                y: 219
+                x: 19
+                y: 480
                 width: 72
-                height: 48
+                height: 29
                 text: "Fresh"
                 signal get_fresh()
                 onClicked: {
@@ -190,55 +167,35 @@ ApplicationWindow {
                     get_fresh()
                 }
                 function fresh_meta(dwfourcc, width, height, cs_id) {
-                    colorspace.currentIndex = cs_id
+                    cs_detect.text = "tmp"
                     cclabel.text = dwfourcc
                     resollabel.text = width + "*" + height
                 }
             }
 
-            /*RoundButton {
-                id: detail
-                objectName: "detail-btn"
-                x: 107
-                y: 234
-                width: 72
-                height: 48
-                text: "Detail"
-                signal get_detail()
-                onClicked: {
-                    console.log("detail")
-                    get_detail()
-                }
-                function detail_meta(str) {
-                    mbox.get_diag_message(str)
-                    mbox.show()
-                }
-            }*/
-
             Text {
                 id: inputcs
-                x: 38
-                y: 293
-                width: 52
+                x: 30
+                y: 222
+                width: 135
                 height: 22
-                text: qsTr("InputCs:")
-                //font.pixelSize:122
+                text: qsTr("Color Space:")
             }
 
             TextField {
                 id: cslabel
-                x: 94
+                x: 30
                 y: 321
-                width: 77
+                width: 140
                 height: 25
                 anchors.top: parent.top
-                anchors.topMargin: 289
+                anchors.topMargin: 314
                 text: qsTr("")
             }
-            Button {
+            Controls14.Button {
                 id: button
                 x: 19
-                y: 343
+                y: 391
                 width: 53
                 height: 30
                 text: qsTr("Open:")
@@ -262,6 +219,27 @@ ApplicationWindow {
                 onRejected: {
                     console.log("Canceled");
                 }
+            }
+
+            Text {
+                id: inputcs1
+                x: 30
+                y: 289
+                width: 135
+                height: 22
+                text: qsTr("Custom Color Space:")
+            }
+
+            TextField {
+                id: cs_detect
+                x: 30
+                y: 328
+                width: 140
+                height: 25
+                text: qsTr("")
+                anchors.topMargin: 241
+                anchors.top: parent.top
+                readOnly: true
             }
         }
     }
