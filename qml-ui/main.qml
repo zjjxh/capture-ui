@@ -73,7 +73,7 @@ ApplicationWindow {
                 id: cclabel
                 x: 30
                 y: 100
-                width: 141
+                width: 140
                 height: 25
                 readOnly: true
                 text: qsTr("")
@@ -98,7 +98,8 @@ ApplicationWindow {
                 readOnly: true
                 text: qsTr("")
             }
-            TextArea {
+
+            TextField {
                 x: 8
                 y: 369
                 width: 184
@@ -108,6 +109,7 @@ ApplicationWindow {
                 id: namelabel
                 wrapMode: TextArea.WrapAnywhere
                 text: "./"
+                transformOrigin: Item.Center
             }
 
             Controls14.Button {
@@ -198,7 +200,7 @@ ApplicationWindow {
                 x: 8
                 y: 391
                 width: 107
-                height: 30
+                height: 29
                 text: qsTr("Open File Path:")
                 onClicked: {
                     fds.open();
