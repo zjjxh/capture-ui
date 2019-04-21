@@ -103,9 +103,9 @@ ApplicationWindow {
                 x: 8
                 y: 369
                 width: 184
-                height: 61
+                height: 86
                 anchors.top: parent.top
-                anchors.topMargin: 327
+                anchors.topMargin: 325
                 id: namelabel
                 wrapMode: TextArea.WrapAnywhere
                 text: "./"
@@ -116,7 +116,7 @@ ApplicationWindow {
                 id: capture
                 objectName: "capture-btn"
                 x: 120
-                y: 418
+                y: 417
                 width: 72
                 height: 29
                 text: "Capture"
@@ -208,7 +208,7 @@ ApplicationWindow {
                 id: button
                 x: 8
                 y: 290
-                width: 107
+                width: 120
                 height: 29
                 text: qsTr("Open File Path:")
                 onClicked: {
