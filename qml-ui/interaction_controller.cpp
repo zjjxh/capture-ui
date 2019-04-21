@@ -85,7 +85,7 @@ void InteractionController::select_src(QString src) {
 void InteractionController::get_fresh(){
     QMetaObject::invokeMethod(m_Freshbtn, "fresh_meta", Q_ARG(QVariant, get_capture_fourcc()),
                               Q_ARG(QVariant, get_capture_width()), Q_ARG(QVariant, get_capture_height()),
-                              Q_ARG(QVariant, get_capture_cs_id()));		
+                              Q_ARG(QVariant, CS_NAME[get_capture_cs_id()]));
 }
 
 /*void InteractionController::get_detail(){
@@ -103,11 +103,11 @@ void InteractionController::capture_image(int card, QString base, int cnt, bool 
         in<<("current cs:"+QString(CS_NAME[get_capture_cs_id()]))<<"\n";
         in<<("current width:"+QString::number(get_capture_width()))<<"\n";
         in<<("current height:"+QString::number(get_capture_height()))<<"\n";
-        in<<("current fourcc:"+QString::number(get_capture_fourcc()))<<"\n";
+        in<<("current fourcc:"+QString(get_capture_fourcc()))<<"\n";
         file.close();
     }
     QMetaObject::invokeMethod(m_Capturebtn, "image_meta", Q_ARG(QVariant, get_capture_fourcc()),
                               Q_ARG(QVariant, get_capture_width()), Q_ARG(QVariant, get_capture_height()),
-                              Q_ARG(QVariant, get_capture_cs_id()));
+                              Q_ARG(QVariant, CS_NAME[get_capture_cs_id()]));
 }
 

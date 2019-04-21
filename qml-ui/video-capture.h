@@ -53,7 +53,7 @@ static const char *const CS_NAME[] = {
  */
 void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp);
 
-uint32_t get_capture_fourcc();
+const char *get_capture_fourcc();
 uint32_t get_capture_width();
 uint32_t get_capture_height();
 uint32_t get_capture_cs_id();

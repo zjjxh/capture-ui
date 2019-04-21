@@ -128,11 +128,7 @@ ApplicationWindow {
 
                      //console.log("capture-done:"+str)
                      //console.log("fname:"+fname)
-                    var arr= ["Unknown","NTSC-1953","PAL/SECAM-1970","NTSC-1987/SMPTE 170M-1",
-                              "ITU601","ITU601-5","sRGB","ITU709","ITU709-5","ITU709-7",
-                              "xvYCC601","xvYCC709","sYCC601","opYCC601","opRGB","DCI-P3",
-                              "ITU2020","ITU2020C"]
-                     cs_detect.text = arr[cs_id]
+                     cs_detect.text = cs_id
                      cclabel.text = dwfourcc
                      resollabel.text = width + "*" + height
                      if (cslabel.text && cs_detect.text != cslabel.text)
@@ -175,11 +171,7 @@ ApplicationWindow {
                     get_fresh()
                 }
                 function fresh_meta(dwfourcc, width, height, cs_id) {
-                    var arr= ["Unknown","NTSC-1953","PAL/SECAM-1970","NTSC-1987/SMPTE 170M-1",
-                              "ITU601","ITU601-5","sRGB","ITU709","ITU709-5","ITU709-7",
-                              "xvYCC601","xvYCC709","sYCC601","opYCC601","opRGB","DCI-P3",
-                              "ITU2020","ITU2020C"]
-                    cs_detect.text = arr[cs_id]
+                    cs_detect.text = cs_id
                     cclabel.text = dwfourcc
                     resollabel.text = width + "*" + height
                 }

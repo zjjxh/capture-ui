@@ -23,13 +23,17 @@ static MWCAP_VIDEO_QUANTIZATION_RANGE capture_range = MWCAP_VIDEO_QUANTIZATION_U
 
 static int capture_width = 0;
 static int capture_height = 0;
-static DWORD capture_fourcc = 0;
+static DWORD capture_fourcc =  MWFOURCC_UNK;
 static CS_ID capture_cs_id = CS_UNKNOWN;
 static char video_signal_info[8192] = {0};
 
-uint32_t get_capture_fourcc()
+const char *get_capture_fourcc()
 {
-    return capture_fourcc;
+    static char _s_fourcc[5];
+    char *tmp = (char *)&capture_fourcc;
+    sprintf(_s_fourcc, "%c%c%c%c", tmp[0], tmp[1], tmp[2], tmp[3]);
+    _s_fourcc[4] = 0;
+    return _s_fourcc;
 }
 uint32_t get_capture_width()
 {
@@ -734,7 +738,7 @@ static void get_and_guess_misc_capture_param(HCHANNEL hChannel)
     capture_range = MWCAP_VIDEO_QUANTIZATION_UNKNOWN;
     capture_width = 0;
     capture_height = 0;
-    capture_fourcc = 0;
+    capture_fourcc = MWFOURCC_UNK;
     capture_cs_id = CS_UNKNOWN;
     video_signal_info[0] = 0;
 
