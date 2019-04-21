@@ -28,7 +28,7 @@ Window {
     //SystemPalette { id: palette }
 
     function get_diag_message(get_message) {
-        console.log("messagebox-done")
+        //console.log("messagebox-done")
         textArea.text = get_message
     }
     TextArea {
