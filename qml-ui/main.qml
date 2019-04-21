@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import QtQuick.Controls 2.5
+import QtQuick.Controls 2.1
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4 as Controls14
 import QtQuick.Layouts 1.12
@@ -42,7 +42,7 @@ ApplicationWindow {
                 id:videoinputsrc
                 objectName: "video-input-src"
                 anchors.horizontalCenterOffset: 0
-                y: 17
+                y: 19
                 width: 140
                 height: 25
                 model: ["HDMI-4K-Input", "SDI-4K-Input", "Misc-Input"]
@@ -59,40 +59,40 @@ ApplicationWindow {
                 onActivated: trigger()
             }
 
-            Text {
+            Controls14.Label{
                 id: fourcc
                 x: 30
-                y: 53
+                y: 61
                 width: 140
                 height: 22
                 text: qsTr("Pixel Format:")
-                font.pixelSize: 12
+                //font.pixelSize: 12
             }
 
             TextField {
                 id: cclabel
                 x: 30
-                y: 68
+                y: 76
                 width: 140
                 height: 25
                 readOnly: true
                 text: qsTr("")
             }
 
-            Text {
+            Controls14.Label {
                 id: resolution
                 x: 30
-                y: 107
+                y: 115
                 width: 140
                 height: 22
                 text: qsTr("Resolution:")
-                font.pixelSize: 12
+                //font.pixelSize: 12
             }
 
             TextField {
                 id: resollabel
                 x: 30
-                y: 123
+                y: 131
                 width: 140
                 height: 25
                 readOnly: true
@@ -103,7 +103,7 @@ ApplicationWindow {
                 x: 8
                 y: 369
                 width: 184
-                height: 95
+                height: 61
                 anchors.top: parent.top
                 anchors.topMargin: 327
                 id: namelabel
@@ -116,10 +116,11 @@ ApplicationWindow {
                 id: capture
                 objectName: "capture-btn"
                 x: 120
-                y: 434
+                y: 418
                 width: 72
                 height: 29
                 text: "Capture"
+
                 property string fname
                 signal capture_image(int index, string base, int cnt, bool needbmp, string cslabel)
 
@@ -160,7 +161,7 @@ ApplicationWindow {
                 id: fresh
                 objectName: "fresh-btn"
                 x: 8
-                y: 434
+                y: 417
                 width: 72
                 height: 29
                 text: "Fresh"
@@ -176,10 +177,10 @@ ApplicationWindow {
                 }
             }
 
-            Text {
+            Controls14.Label {
                 id: inputcs
                 x: 30
-                y: 162
+                y: 170
                 width: 140
                 height: 22
                 text: qsTr("Color Space:")
@@ -192,13 +193,13 @@ ApplicationWindow {
                 width: 140
                 height: 25
                 anchors.top: parent.top
-                anchors.topMargin: 236
+                anchors.topMargin: 243
                 text: qsTr("")
             }
             Controls14.Button {
                 id: button
                 x: 8
-                y: 292
+                y: 290
                 width: 107
                 height: 29
                 text: qsTr("Open File Path:")
@@ -224,10 +225,10 @@ ApplicationWindow {
                 }
             }
 
-            Text {
+            Controls14.Label {
                 id: inputcs1
                 x: 30
-                y: 219
+                y: 226
                 width: 140
                 height: 22
                 text: qsTr("Custom Color Space:")
@@ -240,7 +241,7 @@ ApplicationWindow {
                 width: 140
                 height: 25
                 text: qsTr("")
-                anchors.topMargin: 178
+                anchors.topMargin: 186
                 anchors.top: parent.top
                 readOnly: true
             }
