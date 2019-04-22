@@ -865,7 +865,7 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
                 videoBufferInfo.iNewestBufferedFullFrame, (unsigned char *)pbImage[done], dwImageSize, dwMinStride,
                 1, 0, dwFourcc, cx, cy, 0, 0, 0, 0, 0, 100, 0, 100, 0, MWCAP_VIDEO_DEINTERLACE_BLEND,
                 MWCAP_VIDEO_ASPECT_RATIO_CROPPING, 0, 0, 0, 0, colorfmt,
-                range, MWCAP_VIDEO_SATURATION_FULL)
+                range, MWCAP_VIDEO_SATURATION_UNKNOWN)
                 != MW_SUCCEEDED)
             break;
 
@@ -903,7 +903,6 @@ ERR_CREATE_HNOTIFYEVENT:
 
 void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp)
 {
-    video_signal_info[0] = 0;
     if (!MWCaptureInitInstance())
         printf("have InitilizeFailed");
 
