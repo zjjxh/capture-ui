@@ -745,7 +745,7 @@ static void get_and_guess_misc_capture_param(HCHANNEL hChannel)
     PrintInputCommon(hChannel);
     PrintInputVideo(hChannel);
     PrintInputSpecific(hChannel);
-    printf("%s", video_signal_info);
+    printf("\n\n%s\n\n", video_signal_info);
     if (isCheckHDMI)
         check_hdmi(hChannel);
     if (isCheckSDI)

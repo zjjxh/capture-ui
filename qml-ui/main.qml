@@ -66,7 +66,6 @@ ApplicationWindow {
                 width: 140
                 height: 22
                 text: qsTr("Pixel Format:")
-                //font.pixelSize: 12
             }
 
             TextField {
@@ -86,7 +85,6 @@ ApplicationWindow {
                 width: 140
                 height: 22
                 text: qsTr("Resolution:")
-                //font.pixelSize: 12
             }
 
             TextField {
@@ -108,7 +106,7 @@ ApplicationWindow {
                 anchors.topMargin: 325
                 id: namelabel
                 wrapMode: TextArea.WrapAnywhere
-                text: "./"
+                text: "/home/user/Pictures/"
                 transformOrigin: Item.Center
             }
 
