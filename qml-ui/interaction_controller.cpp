@@ -10,7 +10,7 @@
 
 class SetGstState : public QRunnable {
 public:
-    SetGstState(GstElement *, GstElement *, QString);
+    SetGstState(GstElement *, GstElement *, InteractionController *, QString);
 	~SetGstState();
 
 	void run();
@@ -18,12 +18,14 @@ private:
     GstElement *m_pipeline;
     GstElement *m_gstSrc;
     QString m_src;
+    InteractionController *m_controller;
 };
 
-SetGstState::SetGstState(GstElement *pipeline, GstElement *gstSrc, QString src) {
+SetGstState::SetGstState(GstElement *pipeline, GstElement *gstSrc, InteractionController *controller, QString src) {
     Q_ASSERT(pipeline);
     m_pipeline = static_cast<GstElement *> (gst_object_ref(pipeline));
     m_gstSrc = gstSrc;
+    m_controller = controller;
     m_src = src;
 }
 
@@ -37,6 +39,7 @@ SetGstState::run() {
     qDebug() << "select input src" << m_src;
     g_object_set(m_gstSrc, "device", m_src.toLatin1().data(), nullptr);
     gst_element_set_state(m_pipeline, GST_STATE_PLAYING);
+    m_controller->get_fresh(m_controller->m_SelectSrc->property("currentIndex").toInt());
 }
 
 //==============================================================================
@@ -65,8 +68,8 @@ m_RootObject(window) {
     //Q_ASSERT(NULL != m_Detailbtn);
     QObject::connect(m_Capturebtn, SIGNAL(capture_image(int, QString, int, bool, QString)), this,
                      SLOT(capture_image(int, QString, int, bool, QString)));
-    QObject::connect(m_Freshbtn, SIGNAL(get_fresh()), this,
-                     SLOT(get_fresh()));
+    QObject::connect(m_Freshbtn, SIGNAL(get_fresh(int)), this,
+                     SLOT(get_fresh(int)));
     //QObject::connect(m_Detailbtn, SIGNAL(get_detail()), this,
     //                 SLOT(get_detail()));
 }
@@ -78,11 +81,12 @@ InteractionController::~InteractionController() {
 }
 
 void InteractionController::select_src(QString src) {
-    m_RootObject->scheduleRenderJob(new SetGstState(m_GstPlayer, m_GstSrc, src),
+    m_RootObject->scheduleRenderJob(new SetGstState(m_GstPlayer, m_GstSrc, this, src),
             QQuickWindow::BeforeSynchronizingStage);
 }
 
-void InteractionController::get_fresh(){
+void InteractionController::get_fresh(int card){
+    fresh_capture(card, nullptr, 0, 0);
     QMetaObject::invokeMethod(m_Freshbtn, "fresh_meta", Q_ARG(QVariant, get_capture_fourcc()),
                               Q_ARG(QVariant, get_capture_width()), Q_ARG(QVariant, get_capture_height()),
                               Q_ARG(QVariant, CS_NAME[get_capture_cs_id()]));

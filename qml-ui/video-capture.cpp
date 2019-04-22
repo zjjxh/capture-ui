@@ -26,6 +26,7 @@ static int capture_height = 0;
 static DWORD capture_fourcc =  MWFOURCC_UNK;
 static CS_ID capture_cs_id = CS_UNKNOWN;
 static char video_signal_info[8192] = {0};
+static char *_s_cur = &video_signal_info[0];
 
 const char *get_capture_fourcc()
 {
@@ -54,10 +55,9 @@ const char *get_capture_inputinfo()
 
 static void viprintf(const char *format_string, ...)
 {
-    static char *cur = &video_signal_info[0];
     va_list args;
     va_start(args, format_string);
-    cur += vsprintf(cur, format_string, args);
+    _s_cur += vsprintf(_s_cur, format_string, args);
     va_end(args);
 }
 
@@ -741,6 +741,7 @@ static void get_and_guess_misc_capture_param(HCHANNEL hChannel)
     capture_fourcc = MWFOURCC_UNK;
     capture_cs_id = CS_UNKNOWN;
     video_signal_info[0] = 0;
+    _s_cur = &video_signal_info[0];
 
     PrintInputCommon(hChannel);
     PrintInputVideo(hChannel);

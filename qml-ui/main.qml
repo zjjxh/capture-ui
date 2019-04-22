@@ -163,10 +163,10 @@ ApplicationWindow {
                 width: 72
                 height: 29
                 text: "Fresh"
-                signal get_fresh()
+                signal get_fresh(int card)
                 onClicked: {
                     //console.log("fresh")
-                    get_fresh()
+                    get_fresh(videoinputsrc.currentIndex)
                 }
                 function fresh_meta(dwfourcc, width, height, cs_id) {
                     cs_detect.text = cs_id
