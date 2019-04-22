@@ -883,10 +883,10 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
         if (fourcc[3] == ' ')
             fourcc[3] = 0;
         if (isBMP) {
-            sprintf(name,"%s%d.%s.bmp", base, i, fourcc);
+            sprintf(name,"%s.%d.bmp", base, i);
             create_bitmap(name, pbImage[i], dwImageSize, cx, cy);
         } else {
-            sprintf(name,"%s%d.%s", base, i, fourcc);
+            sprintf(name,"%s.%d.%s", base, i, fourcc);
             save_raw_file((void *)(unsigned long)pbImage[i], dwImageSize, name);
         }
         free((void *)(unsigned long)pbImage[i]);

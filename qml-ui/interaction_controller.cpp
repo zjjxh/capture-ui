@@ -98,16 +98,17 @@ void InteractionController::get_fresh(int card){
 
 void InteractionController::capture_image(int card, QString base, int cnt, bool need_bmp, QString cslabel) {
     fresh_capture(card, base.toLatin1().data(), cnt, need_bmp);
-    if(cslabel != nullptr)
-    {
+    QString raw_file = base + ".0." + get_capture_fourcc();
+    qDebug() << raw_file;
+    if (QFile(raw_file).exists()) {
         QFile file(base+".meta");
         file.open(QIODevice::ReadWrite|QIODevice::Text);
         QTextStream in(&file);
-        in<<("user input cs:"+cslabel)<<"\n";
-        in<<("current cs:"+QString(CS_NAME[get_capture_cs_id()]))<<"\n";
-        in<<("current width:"+QString::number(get_capture_width()))<<"\n";
-        in<<("current height:"+QString::number(get_capture_height()))<<"\n";
-        in<<("current fourcc:"+QString(get_capture_fourcc()))<<"\n";
+        in<<("custom-colorspace:"+cslabel)<<"\n";
+        in<<("detect-colorspace:"+QString(CS_NAME[get_capture_cs_id()]))<<"\n";
+        in<<("width:"+QString::number(get_capture_width()))<<"\n";
+        in<<("height:"+QString::number(get_capture_height()))<<"\n";
+        in<<("pixel-format:"+QString(get_capture_fourcc()))<<"\n";
         file.close();
     }
     QMetaObject::invokeMethod(m_Capturebtn, "image_meta", Q_ARG(QVariant, get_capture_fourcc()),
