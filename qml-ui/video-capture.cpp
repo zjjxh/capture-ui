@@ -932,11 +932,11 @@ void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp)
             capture_frames(hChannel, capture_width, capture_height, capture_fourcc,
                     capture_colorfmt, capture_range, cnt, base, false);
 
-        if (need_bmp) {//test for (sRGB, BGR). save as bmp
+        if (need_bmp && cnt) {//test for (sRGB, BGR). save as bmp
             DWORD dwFourcc = MWFOURCC_BGR24;
             MWCAP_VIDEO_COLOR_FORMAT colorfmt = MWCAP_VIDEO_COLOR_FORMAT_RGB;
             MWCAP_VIDEO_QUANTIZATION_RANGE range = MWCAP_VIDEO_QUANTIZATION_FULL;
-            capture_frames(hChannel, capture_width, capture_height, dwFourcc, colorfmt, range, 1, base, true);
+            capture_frames(hChannel, capture_width, capture_height, dwFourcc, colorfmt, range, cnt, base, true);
         }
     } while (0);
 

@@ -4,9 +4,9 @@ Type=Application
 
 Name=Capture
 
-Icon=/home/hobby/qt/capture-ui/build-test-Desktop-Debug/logo.ico
+Icon=/home/user/capture-ui/build-test-Desktop-Release/logo.ico
 
-Exec=/home/hobby/qt/capture-ui/build-test-Desktop-Debug/test
+Exec=/home/user/capture-ui/build-test-Desktop-Release/Capture
 
 Terminal=false
 

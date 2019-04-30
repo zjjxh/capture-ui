@@ -11,7 +11,7 @@ ApplicationWindow {
     visible: true
     width: 800
     height: 600
-    title: qsTr("Capture Demo")
+    title: qsTr("Capture")
     Messbox{ id:mbox }
 
     Controls14.SplitView{
@@ -150,7 +150,7 @@ ApplicationWindow {
                     capture_image(videoinputsrc.currentIndex,
                                   namelabel.text+
                                   Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss:zzz"),
-                                  1,
+                                  8,
                                   1, cslabel.text)
                 }
             }
