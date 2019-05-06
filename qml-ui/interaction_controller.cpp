@@ -7,6 +7,7 @@
 #include <QRunnable>
 #include <QFile>
 #include <QTextStream>
+#include <QDir>
 
 class SetGstState : public QRunnable {
 public:
@@ -97,11 +98,13 @@ void InteractionController::get_fresh(int card){
 }*/
 
 void InteractionController::capture_image(int card, QString base, int cnt, bool need_bmp, QString cslabel) {
+    if (!QDir().mkpath(base))
+        return;
     fresh_capture(card, base.toLatin1().data(), cnt, need_bmp);
-    QString raw_file = base + ".0." + get_capture_fourcc();
+    QString raw_file = base + "0." + get_capture_fourcc();
     qDebug() << raw_file;
     if (QFile(raw_file).exists()) {
-        QFile file(base+".meta");
+        QFile file(base+"meta.txt");
         file.open(QIODevice::ReadWrite|QIODevice::Text);
         QTextStream in(&file);
         in<<("custom-colorspace:"+cslabel)<<"\n";

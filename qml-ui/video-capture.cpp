@@ -875,7 +875,7 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
     }
     MWUnregisterNotify(hChannel, hNotify);
     for (int i = 0; i != done; ++i) {
-        char name[64];
+        char name[1024];
         char fourcc[5];
         char *tmp = (char *)&dwFourcc;
         sprintf(fourcc, "%c%c%c%c", tmp[0], tmp[1], tmp[2], tmp[3]);
@@ -883,10 +883,10 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
         if (fourcc[3] == ' ')
             fourcc[3] = 0;
         if (isBMP) {
-            sprintf(name,"%s.%d.bmp", base, i);
+            sprintf(name,"%s%d.bmp", base, i);
             create_bitmap(name, pbImage[i], dwImageSize, cx, cy);
         } else {
-            sprintf(name,"%s.%d.%s", base, i, fourcc);
+            sprintf(name,"%s%d.%s", base, i, fourcc);
             save_raw_file((void *)(unsigned long)pbImage[i], dwImageSize, name);
         }
         free((void *)(unsigned long)pbImage[i]);
@@ -928,16 +928,17 @@ void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp)
         //check print and setting
         get_and_guess_misc_capture_param(hChannel);
 
-        if (cnt)
-            capture_frames(hChannel, capture_width, capture_height, capture_fourcc,
-                    capture_colorfmt, capture_range, cnt, base, false);
-
         if (need_bmp && cnt) {//test for (sRGB, BGR). save as bmp
             DWORD dwFourcc = MWFOURCC_BGR24;
             MWCAP_VIDEO_COLOR_FORMAT colorfmt = MWCAP_VIDEO_COLOR_FORMAT_RGB;
             MWCAP_VIDEO_QUANTIZATION_RANGE range = MWCAP_VIDEO_QUANTIZATION_FULL;
             capture_frames(hChannel, capture_width, capture_height, dwFourcc, colorfmt, range, cnt, base, true);
         }
+
+        if (cnt)
+            capture_frames(hChannel, capture_width, capture_height, capture_fourcc,
+                    capture_colorfmt, capture_range, cnt, base, false);
+
     } while (0);
 
     if (hChannel != NULL)

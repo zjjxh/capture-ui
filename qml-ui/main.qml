@@ -148,8 +148,8 @@ ApplicationWindow {
                     //console.log("fname:"+fname)
 
                     capture_image(videoinputsrc.currentIndex,
-                                  namelabel.text+
-                                  Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss:zzz"),
+                                  namelabel.text+"-"+
+                                  Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss:zzz/"),
                                   8,
                                   1, cslabel.text)
                 }
