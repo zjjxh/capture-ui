@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDir>
+#include <QApplication>
 
 class SetGstState : public QRunnable {
 public:
@@ -65,12 +66,16 @@ m_RootObject(window) {
     Q_ASSERT(NULL != m_Capturebtn);
     m_Freshbtn = parent()->findChild<QQuickItem *>("fresh-btn");
     Q_ASSERT(NULL != m_Freshbtn);
+    m_videorgb = parent()->findChild<QQuickItem *>("videoItem");
+    Q_ASSERT(NULL != m_videorgb);
     //m_Detailbtn = parent()->findChild<QQuickItem *>("detail-btn");
     //Q_ASSERT(NULL != m_Detailbtn);
     QObject::connect(m_Capturebtn, SIGNAL(capture_image(int, QString, int, bool, QString)), this,
                      SLOT(capture_image(int, QString, int, bool, QString)));
     QObject::connect(m_Freshbtn, SIGNAL(get_fresh(int)), this,
                      SLOT(get_fresh(int)));
+    QObject::connect(m_videorgb, SIGNAL(get_videorgb()), this,
+                     SLOT(get_videorgb()));
     //QObject::connect(m_Detailbtn, SIGNAL(get_detail()), this,
     //                 SLOT(get_detail()));
 }
@@ -91,6 +96,34 @@ void InteractionController::get_fresh(int card){
     QMetaObject::invokeMethod(m_Freshbtn, "fresh_meta", Q_ARG(QVariant, get_capture_fourcc()),
                               Q_ARG(QVariant, get_capture_width()), Q_ARG(QVariant, get_capture_height()),
                               Q_ARG(QVariant, CS_NAME[get_capture_cs_id()]));
+}
+
+void InteractionController::get_videorgb(){
+    int x = QCursor::pos().x();
+    int y = QCursor::pos().y();
+    int mousedPressed_R = 0;
+    int mousedPressed_G = 0;
+    int mousedPressed_B = 0;
+    QString text = Q_NULLPTR;
+    QPixmap pixmap = QPixmap::grabWindow(0, x, y, 1, 1);
+    qDebug() << "enter into get_videorgb";
+    if (!pixmap.isNull()) //如果像素图不为NULL
+    {
+        QImage image = pixmap.toImage();//将像素图转换为QImage
+        if (!image.isNull()) //如果image不为空
+        {
+            if (image.valid(0, 0)) //坐标位置有效
+            {
+                QColor color = image.pixel(x, y);
+                mousedPressed_R = color.red();
+                mousedPressed_G = color.green();
+                mousedPressed_B = color.blue();
+                text = QString("RGB: %1, %2, %3").arg(mousedPressed_R).arg(mousedPressed_G).arg(mousedPressed_B);
+                qDebug() << text;
+            }
+        }
+    }
+    QMetaObject::invokeMethod(m_videorgb, "videorgb_meta", Q_ARG(QVariant, text));
 }
 
 /*void InteractionController::get_detail(){

@@ -24,6 +24,7 @@ RESOURCES += qml.qrc
 QT+=serialbus
 QT+=serialport
 QT+= qml
+QT += widgets
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
