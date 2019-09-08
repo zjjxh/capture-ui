@@ -25,6 +25,7 @@ QT+=serialbus
 QT+=serialport
 QT+= qml
 QT += widgets
+QT += gui
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

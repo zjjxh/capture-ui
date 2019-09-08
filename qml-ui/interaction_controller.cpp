@@ -9,6 +9,8 @@
 #include <QTextStream>
 #include <QDir>
 #include <QApplication>
+#include <QScreen>
+#include <QWidget>
 
 class SetGstState : public QRunnable {
 public:
@@ -105,7 +107,9 @@ void InteractionController::get_videorgb(){
     int mousedPressed_G = 0;
     int mousedPressed_B = 0;
     QString text = Q_NULLPTR;
-    QPixmap pixmap = QPixmap::grabWindow(0, x, y, 1, 1);
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QPixmap pixmap = screen->grabWindow(m_RootObject->winId(), x, y, 1, 1);
+    //QPixmap pixmap = QPixmap::grabWindow(QWindow::winId(), x, y, 1, 1);
     qDebug() << "enter into get_videorgb";
     if (!pixmap.isNull()) //如果像素图不为NULL
     {
