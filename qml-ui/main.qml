@@ -18,8 +18,26 @@ ApplicationWindow {
         anchors.fill:parent;
         orientation: Qt.Horizontal;
         Rectangle{
+            id: rect1
             Layout.fillWidth: true;
             color: "black"
+            Rectangle {
+                id:loaderrgb;
+                visible: false;
+                enabled: visible;
+                width: 100;
+                height: 30;
+                function setCurrentText(textName) {
+                    interText.text = textName
+                }
+                Text {
+                    id: interText
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: qsTr("text")
+                }
+            }
             Item {
                 anchors.fill: parent
                 GstGLVideoItem {
@@ -29,9 +47,31 @@ ApplicationWindow {
                     anchors.centerIn: parent
                     width: parent.width
                     height: parent.height
+                    signal get_videorgb()
+                    function videorgb_meta(rgb)
+                    {
+                        loaderrgb.setCurrentText(rgb)
+                        loaderrgb.x = mouseMA.mouseX;
+                        loaderrgb.y = mouseMA.mouseY;
+                        loaderrgb.visible = true
+                    }
+                    MouseArea {
+                        id:mouseMA;
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        preventStealing: true
+                        onPressed:
+                        {
+                            videoItem.get_videorgb()
+                        }
+                        onReleased:
+                        {
+                            loaderrgb.visible = false
+                        }
+                    }
+
                 }
             }
-
         }
 
         Rectangle{
@@ -246,4 +286,3 @@ ApplicationWindow {
         }
     }
 }
-
