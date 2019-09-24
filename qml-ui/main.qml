@@ -5,7 +5,7 @@ import QtQuick.Controls 1.4 as Controls14
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.4 as Styles
 import QtQuick.Dialogs 1.1
-//import org.freedesktop.gstreamer.GLVideoItem 1.0
+import org.freedesktop.gstreamer.GLVideoItem 1.0
 
 ApplicationWindow {
     visible: true
@@ -22,8 +22,7 @@ ApplicationWindow {
             color: "black"
             Item {
                 anchors.fill: parent
-                //GstGLVideoItem {
-                Item {
+                GstGLVideoItem {
                     id: videoItem
                     objectName: "videoItem"
                     anchors.centerIn: parent
@@ -257,5 +256,3 @@ ApplicationWindow {
         }
     }
 }
-
-
