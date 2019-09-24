@@ -5,7 +5,7 @@ import QtQuick.Controls 1.4 as Controls14
 import QtQuick.Layouts 1.12
 import QtQuick.Controls.Styles 1.4 as Styles
 import QtQuick.Dialogs 1.1
-import org.freedesktop.gstreamer.GLVideoItem 1.0
+//import org.freedesktop.gstreamer.GLVideoItem 1.0
 
 ApplicationWindow {
     visible: true
@@ -22,8 +22,8 @@ ApplicationWindow {
             color: "black"
             Item {
                 anchors.fill: parent
-                GstGLVideoItem {
-                //Item {
+                //GstGLVideoItem {
+                Item {
                     id: videoItem
                     objectName: "videoItem"
                     anchors.centerIn: parent
@@ -31,11 +31,12 @@ ApplicationWindow {
                     height: parent.height
                     signal get_videorgb()
                     function videorgb_meta(rgb) {
-			console.log(rgb)
+                        picked_rgb.text = rgb
                     }
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
+                            picked_rgb.text = 'RGB: unknown'
                             videoItem.get_videorgb()
                         }
                     }
@@ -244,6 +245,17 @@ ApplicationWindow {
                 anchors.top: parent.top
                 readOnly: true
             }
+
+            Label {
+                id: picked_rgb
+                x: 8
+                y: 471
+                width: 184
+                height: 24
+                text: qsTr("RGB: unknown")
+            }
         }
     }
 }
+
+
