@@ -1,7 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "serialport.h"
 #include <QSharedMemory>
 
 // gstreamer includes

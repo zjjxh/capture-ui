@@ -14,7 +14,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    serialport.cpp \
     interaction_controller.cpp \
     gst_bus_poller.cpp \
     video-capture.cpp
@@ -52,7 +51,6 @@ QMAKE_CXXFLAGS += \
           -Wno-missing-field-initializers
 
 HEADERS += \
-    serialport.h \
     interaction_controller.h \
     gst_bus_poller.h \
     video-capture.h \

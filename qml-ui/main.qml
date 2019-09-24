@@ -106,7 +106,7 @@ ApplicationWindow {
                 anchors.topMargin: 325
                 id: namelabel
                 wrapMode: TextArea.WrapAnywhere
-                text: "/home/user/Pictures/"
+                text: "/home/user/Pictures/myname"
                 transformOrigin: Item.Center
             }
 
@@ -119,13 +119,9 @@ ApplicationWindow {
                 height: 29
                 text: "Capture"
 
-                property string fname
                 signal capture_image(int index, string base, int cnt, bool needbmp, string cslabel)
 
                 function image_meta(dwfourcc, width, height, cs_id) {
-
-                     //console.log("capture-done:"+str)
-                     //console.log("fname:"+fname)
                      cs_detect.text = cs_id
                      cclabel.text = dwfourcc
                      resollabel.text = width + "*" + height
@@ -143,12 +139,8 @@ ApplicationWindow {
                 }
 
                 onClicked: {
-                    fname = namelabel.text+
-                            Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss:zzz")
-                    //console.log("fname:"+fname)
-
                     capture_image(videoinputsrc.currentIndex,
-                                  namelabel.text+"-"+
+                                  namelabel.text+"_"+
                                   Qt.formatDateTime(new Date(), "yyyy-MM-dd-hh:mm:ss:zzz/"),
                                   8,
                                   1, cslabel.text)
