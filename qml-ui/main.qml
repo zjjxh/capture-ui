@@ -29,15 +29,18 @@ ApplicationWindow {
                     anchors.centerIn: parent
                     width: parent.width
                     height: parent.height
+                    signal get_videorgb()
+                    function videorgb_meta(rgb) {
+			console.log(rgb)
+                    }
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            console.log('clicked')
+                            videoItem.get_videorgb()
                         }
                     }
                 }
             }
-
         }
 
         Rectangle{
@@ -244,4 +247,3 @@ ApplicationWindow {
         }
     }
 }
-

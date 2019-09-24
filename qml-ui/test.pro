@@ -1,4 +1,8 @@
 QT += quick
+QT+= qml
+QT += widgets
+QT += gui
+
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -19,10 +23,6 @@ SOURCES += \
     video-capture.cpp
 
 RESOURCES += qml.qrc
-
-QT+=serialbus
-QT+=serialport
-QT+= qml
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

@@ -1,4 +1,4 @@
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QSharedMemory>
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
     gst_init(&argc, &argv);
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     GstElement *pipeline = gst_pipeline_new(nullptr);
     GstElement *src = gst_element_factory_make("v4l2src", nullptr);
