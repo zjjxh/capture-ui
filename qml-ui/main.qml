@@ -29,6 +29,12 @@ ApplicationWindow {
                     anchors.centerIn: parent
                     width: parent.width
                     height: parent.height
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            console.log('clicked')
+                        }
+                    }
                 }
             }
 
