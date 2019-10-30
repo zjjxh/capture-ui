@@ -934,11 +934,11 @@ void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp)
             MWCAP_VIDEO_QUANTIZATION_RANGE range = MWCAP_VIDEO_QUANTIZATION_FULL;
             capture_frames(hChannel, capture_width, capture_height, dwFourcc, colorfmt, range, cnt, base, true);
         }
-
+#if 0
         if (cnt)
             capture_frames(hChannel, capture_width, capture_height, capture_fourcc,
                     capture_colorfmt, capture_range, cnt, base, false);
-
+#endif
     } while (0);
 
     if (hChannel != NULL)

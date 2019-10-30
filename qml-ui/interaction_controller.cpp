@@ -134,6 +134,7 @@ void InteractionController::capture_image(int card, QString base, int cnt, bool 
     if (!QDir().mkpath(base))
         return;
     fresh_capture(card, base.toLatin1().data(), cnt, need_bmp);
+#if 0
     QString raw_file = base + "0." + get_capture_fourcc();
     qDebug() << raw_file;
     if (QFile(raw_file).exists()) {
@@ -147,6 +148,7 @@ void InteractionController::capture_image(int card, QString base, int cnt, bool 
         in<<("pixel-format:"+QString(get_capture_fourcc()))<<"\n";
         file.close();
     }
+#endif
     QMetaObject::invokeMethod(m_Capturebtn, "image_meta", Q_ARG(QVariant, get_capture_fourcc()),
                               Q_ARG(QVariant, get_capture_width()), Q_ARG(QVariant, get_capture_height()),
                               Q_ARG(QVariant, CS_NAME[get_capture_cs_id()]));
