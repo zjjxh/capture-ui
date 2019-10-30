@@ -39,9 +39,9 @@ ApplicationWindow {
                     height: parent.height
                     signal get_videorgb()
                     signal video_press(int x, int y)
-                    signal video_release(int x, int y)
-                    function videorgb_meta(rgb) {
-                        picked_rgb.text = rgb
+                    signal video_release(int w0, int h0, int x, int y, int w1, int h1)
+                    function videorgb_meta(rgb_text) {
+                        picked_rgb.text = rgb_text
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -49,12 +49,14 @@ ApplicationWindow {
                             dragRegion.x = mouse.x
                             dragRegion.y = mouse.y
                             videoItem.video_press(mouse.x, mouse.y)
-                            //console.log("onPressed,x:"+dragRegion.x)
-                            //console.log("onPressed,y:"+dragRegion.y)
                         }
                         onReleased: {
                             dragRegion.visible = false
-                            videoItem.video_release(mouse.x, mouse.y)
+                            dragRegion.width = mouse.x - dragRegion.x
+                            dragRegion.height = mouse.y - dragRegion.y
+                            videoItem.video_release(videoItem.width, videoItem.height,
+                                                   dragRegion.x, dragRegion.y,
+                                                   dragRegion.width, dragRegion.height)
                         }
                         onClicked: {
                             picked_rgb.text = 'RGB: unknown'
@@ -64,8 +66,6 @@ ApplicationWindow {
                             dragRegion.width = mouse.x - dragRegion.x
                             dragRegion.height = mouse.y - dragRegion.y
                             dragRegion.visible = true
-                            //console.log("onPositionChanged,x:"+mouse.x)
-                            //console.log("onPositionChanged,y:"+(mouse.y - dragRegion.y))
                         }
                     }
                 }

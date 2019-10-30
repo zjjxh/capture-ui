@@ -26,7 +26,7 @@ public slots:
     void get_fresh(int);
     void get_videorgb();
     void video_press(int, int);
-    void video_release(int, int);
+    void video_release(int, int, int, int, int , int);
     //void get_detail();
 private:
 	GstElement *m_GstPlayer;

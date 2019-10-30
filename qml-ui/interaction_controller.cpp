@@ -81,8 +81,8 @@ m_RootObject(window) {
                      SLOT(get_videorgb()));
     QObject::connect(m_videorgb, SIGNAL(video_press(int, int)), this,
                      SLOT(video_press(int, int)));
-    QObject::connect(m_videorgb, SIGNAL(video_release(int, int)), this,
-                     SLOT(video_release(int, int)));
+    QObject::connect(m_videorgb, SIGNAL(video_release(int, int, int, int, int, int)), this,
+                     SLOT(video_release(int, int, int, int, int, int)));
 
     //QObject::connect(m_Detailbtn, SIGNAL(get_detail()), this,
     //                 SLOT(get_detail()));
@@ -111,9 +111,11 @@ void InteractionController::video_press(int x, int y)
         qDebug() << "enter into video_press";
 }
 
-void InteractionController::video_release(int x, int y)
+void InteractionController::video_release(int w0, int h0, int x, int y, int w1, int h1)
 {
-    qDebug() << "enter into video_release\n";
+    int w = get_capture_width();
+    int h = get_capture_height();
+    qDebug() << "enter into video_release" << w0 << h0 << x << y << w1 << h1;
 }
 
 void InteractionController::get_videorgb() {
