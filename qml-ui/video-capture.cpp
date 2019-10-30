@@ -889,7 +889,10 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
             sprintf(name,"%s%d.%s", base, i, fourcc);
             save_raw_file((void *)(unsigned long)pbImage[i], dwImageSize, name);
         }
-        free((void *)(unsigned long)pbImage[i]);
+    }
+
+    for (int i = 0; i != cnt; ++i) {
+	free((void *)(unsigned long)pbImage[i]);
     }
 
 ERR_REGISTER_NOTIFY:

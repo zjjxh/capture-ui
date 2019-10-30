@@ -20,15 +20,6 @@ ApplicationWindow {
         Rectangle{
             Layout.fillWidth: true;
             color: "black"
-            Rectangle{
-            id: dragRegion
-            width:0
-            height:0
-            color:Qt.rgba(0.5,0.5,0.5,0.9)
-            x:0
-            y:0
-            visible: false
-            }
             Item {
                 anchors.fill: parent
                 GstGLVideoItem {
@@ -42,6 +33,15 @@ ApplicationWindow {
                     signal video_release(int w0, int h0, int x, int y, int w1, int h1)
                     function videorgb_meta(rgb_text) {
                         picked_rgb.text = rgb_text
+                    }
+                    Rectangle {
+                        id: dragRegion
+                        width:0
+                        height:0
+                        color:Qt.rgba(0.5,0.5,0.5,0.9)
+                        x:0
+                        y:0
+                        visible: false
                     }
                     MouseArea {
                         anchors.fill: parent
