@@ -805,7 +805,7 @@ static void save_raw_file(void *data, int length, const char *name)
 
 static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
         MWCAP_VIDEO_COLOR_FORMAT colorfmt, MWCAP_VIDEO_QUANTIZATION_RANGE range,
-        unsigned cnt, const char *base, bool isBMP)
+	unsigned cnt, const char *base, bool isBMP, int x1, int y1, int cx1, int cy1)
 {
     MW_RESULT xr;
     HNOTIFY hNotify;
@@ -814,11 +814,18 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
 
     DWORD dwMinStride = FOURCC_CalcMinStride(dwFourcc, cx, 4);
     DWORD dwImageSize = FOURCC_CalcImageSize(dwFourcc, cx, cy, dwMinStride);
- 
+
+    DWORD dwMinStride1 = FOURCC_CalcMinStride(dwFourcc, cx1, 4);
+    DWORD dwImageSize1 = FOURCC_CalcImageSize(dwFourcc, cx1, cy1, dwMinStride1);
+
     int done = 0;
     HANDLE64 pbImage[cnt];
     for (int i = 0; i != cnt; ++i)
-        pbImage[i] = 0;
+	pbImage[i] = 0;
+
+    HANDLE64 pbImage1[cnt];
+    for (int i = 0; i != cnt; ++i)
+	pbImage1[i] = 0;
 
     hCaptureEvent = MWCreateEvent();
     if (hCaptureEvent == 0)
@@ -843,7 +850,12 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
         pbImage[done] = (HANDLE64)(unsigned long)malloc(dwImageSize);
         if (!pbImage[done])
             break;
-        memset((void *)(unsigned long)pbImage[done], 0, dwImageSize);
+	memset((void *)(unsigned long)pbImage[done], 0, dwImageSize);
+
+	pbImage1[done] = (HANDLE64)(unsigned long)malloc(dwImageSize1);
+	if (!pbImage1[done])
+	    break;
+	memset((void *)(unsigned long)pbImage1[done], 0, dwImageSize1);
 
         if (MWWaitEvent(hNotifyEvent, 1000) <= 0)
             break;
@@ -893,6 +905,7 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
 
     for (int i = 0; i != cnt; ++i) {
 	free((void *)(unsigned long)pbImage[i]);
+	free((void *)(unsigned long)pbImage1[i]);
     }
 
 ERR_REGISTER_NOTIFY:
@@ -935,12 +948,12 @@ void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp)
             DWORD dwFourcc = MWFOURCC_BGR24;
             MWCAP_VIDEO_COLOR_FORMAT colorfmt = MWCAP_VIDEO_COLOR_FORMAT_RGB;
             MWCAP_VIDEO_QUANTIZATION_RANGE range = MWCAP_VIDEO_QUANTIZATION_FULL;
-            capture_frames(hChannel, capture_width, capture_height, dwFourcc, colorfmt, range, cnt, base, true);
+	    capture_frames(hChannel, capture_width, capture_height, dwFourcc, colorfmt, range, cnt, base, true, 0, 0, capture_width, capture_height);
         }
 #if 0
         if (cnt)
             capture_frames(hChannel, capture_width, capture_height, capture_fourcc,
-                    capture_colorfmt, capture_range, cnt, base, false);
+		    capture_colorfmt, capture_range, cnt, base, false, 0, 0, capture_width, capture_height);
 #endif
     } while (0);
 
