@@ -79,6 +79,11 @@ m_RootObject(window) {
                      SLOT(get_fresh(int)));
     QObject::connect(m_videorgb, SIGNAL(get_videorgb()), this,
                      SLOT(get_videorgb()));
+    QObject::connect(m_videorgb, SIGNAL(video_press(int, int)), this,
+                     SLOT(video_press(int, int)));
+    QObject::connect(m_videorgb, SIGNAL(video_release(int, int)), this,
+                     SLOT(video_release(int, int)));
+
     //QObject::connect(m_Detailbtn, SIGNAL(get_detail()), this,
     //                 SLOT(get_detail()));
 }
@@ -99,6 +104,16 @@ void InteractionController::get_fresh(int card){
     QMetaObject::invokeMethod(m_Freshbtn, "fresh_meta", Q_ARG(QVariant, get_capture_fourcc()),
                               Q_ARG(QVariant, get_capture_width()), Q_ARG(QVariant, get_capture_height()),
                               Q_ARG(QVariant, CS_NAME[get_capture_cs_id()]));
+}
+
+void InteractionController::video_press(int x, int y)
+{
+        qDebug() << "enter into video_press";
+}
+
+void InteractionController::video_release(int x, int y)
+{
+    qDebug() << "enter into video_release\n";
 }
 
 void InteractionController::get_videorgb() {
