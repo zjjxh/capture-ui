@@ -51,7 +51,7 @@ static const char *const CS_NAME[] = {
  * cnt: capture cnt. if cnt == 0, just fresh meta-info.
  * need_bmp: if true, save a bmp file.
  */
-void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp);
+void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp, int x, int y, int cx, int cy);
 
 const char *get_capture_fourcc();
 uint32_t get_capture_width();

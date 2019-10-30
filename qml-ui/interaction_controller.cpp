@@ -100,7 +100,7 @@ void InteractionController::select_src(QString src) {
 }
 
 void InteractionController::get_fresh(int card){
-	fresh_capture(card, nullptr, 0, 0);
+	fresh_capture(card, nullptr, 0, 0, 0, 0, 0, 0);
 	QMetaObject::invokeMethod(m_Freshbtn, "fresh_meta", Q_ARG(QVariant, get_capture_fourcc()),
 				  Q_ARG(QVariant, get_capture_width()), Q_ARG(QVariant, get_capture_height()),
 				  Q_ARG(QVariant, CS_NAME[get_capture_cs_id()]));
@@ -108,14 +108,64 @@ void InteractionController::get_fresh(int card){
 
 void InteractionController::video_press(int x, int y)
 {
-	qDebug() << "enter into video_press";
+	qDebug() << "enter into video_press" << x << y;
 }
 
+//ugly...but quick to impl
+static int x1 = 0;
+static int y1 = 0;
+static int cx1 = 0;
+static int cy1 = 0;
 void InteractionController::video_release(int w0, int h0, int x, int y, int w1, int h1)
 {
-	int w = get_capture_width();
-	int h = get_capture_height();
-	qDebug() << "enter into video_release" << w0 << h0 << x << y << w1 << h1;
+	double r = 0.0;
+	//unsigned int w = get_capture_width();
+	//unsigned int h = get_capture_height();
+	int w = 4000;
+	int h = 3000;
+	qDebug() << "enter into video_release" << w << h << w0 << h0 << x << y << w1 << h1;
+	if (w <= 0 || h <= 0 || w1 <= 0 || h1 <= 0 || x <= 0 || y <= 0)
+		goto reset;
+	if (h * w0 < h0 * w) {
+		r = w / w0;
+		x1 = x;
+		y1 = y + (h * w0 / (double)w - h0) / 2;
+
+	} else {
+		r = h / h0;
+		x1 = x + (w * h0 / (double)h - w0) / 2;
+		y1 = y;
+	}
+	x1 = x1 * r;
+	y1 = y1 * r;
+	cx1 = w1 * r;
+	cy1 = h1 * r;
+
+	if (x1 < 0) {
+		cx1 += x1;
+		x1 = 0;
+	}
+	if (y1 < 0) {
+		cy1 += y1;
+		y1 = 0;
+	}
+	if (x1 >= w || y1 >= h)
+		goto reset;
+
+	if (x1 + cx1 > w)
+		cx1 = w - x1;
+	if (y1 + cy1 > h)
+		cy1 = h - y1;
+	if (cx1 <= 0 || cy1 <= 0)
+		goto reset;
+
+final:
+	qDebug() << "region" << x1 << y1 << cx1 << cy1;
+	return;
+reset:
+	qDebug() << "reset region";
+	x1 = y1 = cx1 = cy1 = 0;
+	goto final;
 }
 
 void InteractionController::get_videorgb() {
@@ -150,7 +200,8 @@ void InteractionController::get_videorgb() {
 void InteractionController::capture_image(int card, QString base, int cnt, bool need_bmp, QString cslabel) {
 	if (!QDir().mkpath(base))
 		return;
-	fresh_capture(card, base.toLatin1().data(), cnt, need_bmp);
+
+	fresh_capture(card, base.toLatin1().data(), cnt, need_bmp, x1, y1, cx1, cy1);
 #if 0
 	QString raw_file = base + "0." + get_capture_fourcc();
 	qDebug() << raw_file;

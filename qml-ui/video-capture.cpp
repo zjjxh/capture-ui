@@ -930,7 +930,7 @@ ERR_CREATE_HNOTIFYEVENT:
 	MWCloseEvent(hCaptureEvent);
 }
 
-void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp)
+void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp, int x, int y, int cx, int cy)
 {
 	if (!MWCaptureInitInstance())
 		printf("have InitilizeFailed");
@@ -960,12 +960,12 @@ void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp)
 			DWORD dwFourcc = MWFOURCC_BGR24;
 			MWCAP_VIDEO_COLOR_FORMAT colorfmt = MWCAP_VIDEO_COLOR_FORMAT_RGB;
 			MWCAP_VIDEO_QUANTIZATION_RANGE range = MWCAP_VIDEO_QUANTIZATION_FULL;
-			capture_frames(hChannel, capture_width, capture_height, dwFourcc, colorfmt, range, cnt, base, true, 0, 0, capture_width, capture_height);
+			capture_frames(hChannel, capture_width, capture_height, dwFourcc, colorfmt, range, cnt, base, true, x, y, cx, cy);
 		}
 #if 0
 		if (cnt)
 			capture_frames(hChannel, capture_width, capture_height, capture_fourcc,
-				       capture_colorfmt, capture_range, cnt, base, false, 0, 0, capture_width, capture_height);
+				       capture_colorfmt, capture_range, cnt, base, false, x, y, cx, cy);
 #endif
 	} while (0);
 
@@ -1002,7 +1002,7 @@ int main(int argc, char* argv[])
 	int cnt = atoi(argv[3]);
 	bool need_bmp = (atoi(argv[4]) != 0);
 
-	fresh_capture(card, base, cnt, need_bmp);
+	fresh_capture(card, base, cnt, need_bmp, 0, 0, 0, 0);
 
 	printf("\nPress 'Enter' to exit!\n");
 	getchar();
