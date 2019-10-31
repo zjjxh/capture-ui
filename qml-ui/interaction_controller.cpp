@@ -99,11 +99,21 @@ void InteractionController::select_src(QString src) {
 					QQuickWindow::BeforeSynchronizingStage);
 }
 
+//ugly...but quick to impl
+static int x1 = 0;
+static int y1 = 0;
+static int cx1 = 0;
+static int cy1 = 0;
 void InteractionController::get_fresh(int card){
 	fresh_capture(card, nullptr, 0, 0, 0, 0, 0, 0);
 	QMetaObject::invokeMethod(m_Freshbtn, "fresh_meta", Q_ARG(QVariant, get_capture_fourcc()),
 				  Q_ARG(QVariant, get_capture_width()), Q_ARG(QVariant, get_capture_height()),
 				  Q_ARG(QVariant, CS_NAME[get_capture_cs_id()]));
+	x1 = y1 = cx1 = cy1 = 0;
+	QString text = "RGB: unknown";
+	QMetaObject::invokeMethod(m_videorgb, "videorgb_meta", Q_ARG(QVariant, text));
+	text = "region: default";
+	QMetaObject::invokeMethod(m_videorgb, "picked_region_meta", Q_ARG(QVariant, text));
 }
 
 void InteractionController::video_press(int x, int y)
@@ -111,13 +121,9 @@ void InteractionController::video_press(int x, int y)
 	qDebug() << "enter into video_press" << x << y;
 }
 
-//ugly...but quick to impl
-static int x1 = 0;
-static int y1 = 0;
-static int cx1 = 0;
-static int cy1 = 0;
 void InteractionController::video_release(int w0, int h0, int x, int y, int w1, int h1)
 {
+	QString text = "region: default";
 	double r = 0.0;
 	//unsigned int w = get_capture_width();
 	//unsigned int h = get_capture_height();
@@ -160,7 +166,11 @@ void InteractionController::video_release(int w0, int h0, int x, int y, int w1, 
 		goto reset;
 
 final:
-	qDebug() << "region" << x1 << y1 << cx1 << cy1;
+	if (cx1 != 0)
+		text = QString("region: %1, %2\nsize: %3, %4").arg(x1).arg(y1).arg(cx1).arg(cy1);
+	qDebug() << x1 << y1 << cx1 << cy1;
+	qDebug() << text;
+	QMetaObject::invokeMethod(m_videorgb, "picked_region_meta", Q_ARG(QVariant, text));
 	return;
 reset:
 	qDebug() << "reset region";
@@ -174,7 +184,7 @@ void InteractionController::get_videorgb() {
 	int mousedPressed_R = 0;
 	int mousedPressed_G = 0;
 	int mousedPressed_B = 0;
-	QString text = Q_NULLPTR;
+	QString text = "RGB: failed";
 	QScreen *screen = QGuiApplication::primaryScreen();
 	QPixmap pixmap = screen->grabWindow((QApplication::desktop())->winId(), x, y, 1, 1);
 	if (!pixmap.isNull()) {

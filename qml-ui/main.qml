@@ -34,7 +34,7 @@ ApplicationWindow {
                     function videorgb_meta(rgb_text) {
                         picked_rgb.text = rgb_text
                     }
-                    function picked_region_meat(region_text) {
+                    function picked_region_meta(region_text) {
                         picked_region.text = region_text
                     }
                     Rectangle {
@@ -57,13 +57,15 @@ ApplicationWindow {
                             dragRegion.visible = false
                             dragRegion.width = mouse.x - dragRegion.x
                             dragRegion.height = mouse.y - dragRegion.y
+                            if (dragRegion.width == 0 && dragRegion.height == 0)
+                                return
                             videoItem.video_release(videoItem.width, videoItem.height,
                                                    dragRegion.x, dragRegion.y,
                                                    dragRegion.width, dragRegion.height)
                         }
                         onClicked: {
-                            picked_rgb.text = 'RGB: unknown'
-                            videoItem.get_videorgb()
+                            if (dragRegion.width == 0 && dragRegion.height == 0)
+                                videoItem.get_videorgb()
                         }
                         onPositionChanged: {
                             dragRegion.width = mouse.x - dragRegion.x
