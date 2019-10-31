@@ -125,8 +125,8 @@ void InteractionController::video_release(int w0, int h0, int x, int y, int w1, 
 {
 	QString text = "region: default";
 	double r = 0.0;
-	//unsigned int w = get_capture_width();
-	//unsigned int h = get_capture_height();
+	//int w = get_capture_width();
+	//int h = get_capture_height();
 	int w = 4000;
 	int h = 3000;
 	qDebug() << "enter into video_release" << w << h << w0 << h0 << x << y << w1 << h1;
@@ -208,6 +208,7 @@ void InteractionController::get_videorgb() {
 }*/
 
 void InteractionController::capture_image(int card, QString base, int cnt, bool need_bmp, QString cslabel) {
+	qDebug() << "capture_image" << base;
 	if (!QDir().mkpath(base))
 		return;
 
@@ -227,8 +228,12 @@ void InteractionController::capture_image(int card, QString base, int cnt, bool 
 		file.close();
 	}
 #endif
+	x1 = y1 = cx1 = cy1 = 0;
+	QString text = "RGB: unknown";
+	QMetaObject::invokeMethod(m_videorgb, "videorgb_meta", Q_ARG(QVariant, text));
+	text = "region: default";
+	QMetaObject::invokeMethod(m_videorgb, "picked_region_meta", Q_ARG(QVariant, text));
 	QMetaObject::invokeMethod(m_Capturebtn, "image_meta", Q_ARG(QVariant, get_capture_fourcc()),
 				  Q_ARG(QVariant, get_capture_width()), Q_ARG(QVariant, get_capture_height()),
 				  Q_ARG(QVariant, CS_NAME[get_capture_cs_id()]));
 }
-

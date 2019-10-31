@@ -5,6 +5,7 @@
 #include <sys/select.h>
 #include <unistd.h>
 #include <stdarg.h>
+#include <stdint.h>
 
 #include "video-capture.h"
 #include "MWFOURCC.h"
@@ -818,6 +819,12 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
 	DWORD dwMinStride1 = FOURCC_CalcMinStride(dwFourcc, cx1, 4);
 	DWORD dwImageSize1 = FOURCC_CalcImageSize(dwFourcc, cx1, cy1, dwMinStride1);
 
+	//check x1, y1, cx1, cy1
+	if ((x1 + cx1 > cx) || (y1 + cy1 > cy)) {
+		printf("region pararmer error. ignore.");
+		return;
+	}
+
 	int done = 0;
 	HANDLE64 pbImage[cnt];
 	for (int i = 0; i != cnt; ++i)
@@ -889,29 +896,31 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
 	for (int i = 0; i != done; ++i) {
 		char name[1024];
 		char fourcc[5];
-		char *tmp = (char *)&dwFourcc;
+		char *tmp = reinterpret_cast<char *>(&dwFourcc);
 		sprintf(fourcc, "%c%c%c%c", tmp[0], tmp[1], tmp[2], tmp[3]);
 		fourcc[4] = 0;
 		if (fourcc[3] == ' ')
 			fourcc[3] = 0;
-		//crop raw data
-		char *from = (char *)(unsigned long)pbImage[i];
-		from += (cy - y1 - cy1) * dwMinStride;
-		char *to = (char *)(unsigned long)pbImage1[i];
+		//crop raw data. NOTE!!! it only works for packed-mode byte-aligned fourcc!!!
+		const int start_offset = (FOURCC_GetBpp(dwFourcc) * x1) >> 3;
+		const int line_len = (FOURCC_GetBpp(dwFourcc) * cx1) >> 3;
+		char *from = reinterpret_cast<char *>(static_cast<uintptr_t>(pbImage[i]));
+		from += (cy - y1 - cy1) * static_cast<int>(dwMinStride);
+		char *to = reinterpret_cast<char *>(static_cast<uintptr_t>(pbImage1[i]));
 		for (int j = 0; j != cy1; ++j) {
-			char *it_from = from + x1;
+			char *it_from = from + start_offset;
 			char *it_to = to;
-			for (unsigned int k = 0; k != dwMinStride1; ++k)
+			for (int k = 0; k != line_len; ++k)
 				*it_to++ = *it_from++;
 			from += dwMinStride;
 			to += dwMinStride1;
 		}
 		if (isBMP) {
 			sprintf(name,"%s%d.bmp", base, i);
-			create_bitmap(name, pbImage1[i], dwImageSize1, cx, cy);
+			create_bitmap(name, pbImage1[i], static_cast<int>(dwImageSize1), cx1, cy1);
 		} else {
 			sprintf(name,"%s%d.%s", base, i, fourcc);
-			save_raw_file((void *)(unsigned long)pbImage1[i], dwImageSize1, name);
+			save_raw_file(reinterpret_cast<void *>(static_cast<uintptr_t>(pbImage1[i])), static_cast<int>(dwImageSize1), name);
 		}
 	}
 
@@ -956,6 +965,12 @@ void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp, 
 		//check print and setting
 		get_and_guess_misc_capture_param(hChannel);
 
+		//for default x, y, cx, cy
+		if (cx == 0) {
+			x = y = 0;
+			cx = capture_width;
+			cy = capture_height;
+		}
 		if (need_bmp && cnt) {//test for (sRGB, BGR). save as bmp
 			DWORD dwFourcc = MWFOURCC_BGR24;
 			MWCAP_VIDEO_COLOR_FORMAT colorfmt = MWCAP_VIDEO_COLOR_FORMAT_RGB;
