@@ -125,10 +125,10 @@ void InteractionController::video_release(int w0, int h0, int x, int y, int w1, 
 {
 	QString text = "region: default";
 	double r = 0.0;
-	//int w = get_capture_width();
-	//int h = get_capture_height();
-	int w = 4000;
-	int h = 3000;
+	int w = get_capture_width();
+	int h = get_capture_height();
+	//int w = 4000;
+	//int h = 3000;
 	qDebug() << "enter into video_release" << w << h << w0 << h0 << x << y << w1 << h1;
 	if (w <= 0 || h <= 0 || w1 <= 0 || h1 <= 0 || x <= 0 || y <= 0)
 		goto reset;
@@ -211,6 +211,7 @@ void InteractionController::capture_image(int card, QString base, int cnt, bool 
 	qDebug() << "capture_image" << base;
 	if (!QDir().mkpath(base))
 		return;
+	qDebug() << "capture_image mkdir " << base << "pass";
 
 	fresh_capture(card, base.toLatin1().data(), cnt, need_bmp, x1, y1, cx1, cy1);
 #if 0
