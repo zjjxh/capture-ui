@@ -34,6 +34,9 @@ ApplicationWindow {
                     function videorgb_meta(rgb_text) {
                         picked_rgb.text = rgb_text
                     }
+                    function picked_region_meat(region_text) {
+                        picked_region.text = region_text
+                    }
                     Rectangle {
                         id: dragRegion
                         width:0
@@ -281,6 +284,14 @@ ApplicationWindow {
                 width: 184
                 height: 24
                 text: qsTr("RGB: unknown")
+            }
+            Label {
+                id: picked_region
+                x: 8
+                y: 500
+                width: 184
+                height: 24
+                text: qsTr("region: default")
             }
         }
     }
