@@ -884,7 +884,7 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
 		if (MWCaptureVideoFrameToVirtualAddressEx(hChannel,
 							  videoBufferInfo.iNewestBufferedFullFrame, (unsigned char *)pbImage[done], dwImageSize, dwMinStride,
 							  1, 0, dwFourcc, cx, cy, 0, 0, 0, 0, 0, 100, 0, 100, 0, MWCAP_VIDEO_DEINTERLACE_BLEND,
-							  MWCAP_VIDEO_ASPECT_RATIO_CROPPING, 0, 0, 0, 0, colorfmt,
+							  MWCAP_VIDEO_ASPECT_RATIO_IGNORE, 0, 0, 0, 0, colorfmt,
 							  range, MWCAP_VIDEO_SATURATION_UNKNOWN)
 		    != MW_SUCCEEDED)
 			break;
