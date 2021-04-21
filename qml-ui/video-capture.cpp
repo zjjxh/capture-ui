@@ -713,6 +713,7 @@ static void check_hdmi(HCHANNEL hChannel)
 
 static void check_sdi(HCHANNEL hChannel)
 {
+	(void)hChannel;
 	if (b_st352) {
 		switch (u_st352.V1.byColorimetry) {
 		case 0:
@@ -769,6 +770,7 @@ static HCHANNEL open_channel(int nDevIndex)
 	for (int i = 0; i < nChannelCount; i++) {
 		MWCAP_CHANNEL_INFO info;
 		MW_RESULT mr = MWGetChannelInfoByIndex(i, &info);
+		(void)mr;
 		if (strcmp(info.szFamilyName, "Pro Capture") == 0) {
 			printf("find %s\n",info.szFamilyName);
 			nProDevChannel[nProDevCount] = i;
@@ -819,19 +821,24 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
 	DWORD dwMinStride1 = FOURCC_CalcMinStride(dwFourcc, cx1, 4);
 	DWORD dwImageSize1 = FOURCC_CalcImageSize(dwFourcc, cx1, cy1, dwMinStride1);
 
+	if (dwImageSize == 0 || dwImageSize1 == 0) {
+		printf("fourcc error. ignore.");
+		return;
+	}
+
 	//check x1, y1, cx1, cy1
 	if ((x1 + cx1 > cx) || (y1 + cy1 > cy)) {
 		printf("region pararmer error. ignore.");
 		return;
 	}
 
-	int done = 0;
+	unsigned int done = 0;
 	HANDLE64 pbImage[cnt];
-	for (int i = 0; i != cnt; ++i)
+	for (unsigned int i = 0; i != cnt; ++i)
 		pbImage[i] = 0;
 
 	HANDLE64 pbImage1[cnt];
-	for (int i = 0; i != cnt; ++i)
+	for (unsigned int i = 0; i != cnt; ++i)
 		pbImage1[i] = 0;
 
 	hCaptureEvent = MWCreateEvent();
@@ -893,7 +900,7 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
 			break;
 	}
 	MWUnregisterNotify(hChannel, hNotify);
-	for (int i = 0; i != done; ++i) {
+	for (unsigned int i = 0; i != done; ++i) {
 		char name[1024];
 		char fourcc[5];
 		char *tmp = reinterpret_cast<char *>(&dwFourcc);
@@ -924,7 +931,7 @@ static void capture_frames(HCHANNEL hChannel, int cx, int cy, DWORD dwFourcc,
 		}
 	}
 
-	for (int i = 0; i != cnt; ++i) {
+	for (unsigned int i = 0; i != cnt; ++i) {
 		free((void *)(unsigned long)pbImage[i]);
 		free((void *)(unsigned long)pbImage1[i]);
 	}
@@ -952,7 +959,7 @@ void fresh_capture(uint8_t card, const char *base, unsigned cnt, bool need_bmp, 
 		if (NULL == hChannel)
 			break;
 
-		MWCAP_CHANNEL_INFO videoInfo = {0};
+		MWCAP_CHANNEL_INFO videoInfo = {};
 		if (MW_SUCCEEDED != MWGetChannelInfo(hChannel, &videoInfo)) {
 			printf("ERROR: Can't get channel info!\n");
 			break;
