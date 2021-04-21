@@ -31,13 +31,14 @@ int main(int argc, char *argv[])
 
 	//add capfilter
 	GstElement *capsfilter = gst_element_factory_make("capsfilter", nullptr);
-	GstCaps *caps = gst_caps_new_simple ("video/x-raw",
-					     //"format", G_TYPE_STRING, "ARGB",
-					     "framerate", GST_TYPE_FRACTION, 15, 1,
-					     "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
-					     "width", G_TYPE_INT, 800,
-					     "height", G_TYPE_INT, 600,
-					     NULL);
+	GstCaps *caps = gst_caps_new_simple (
+				"video/x-raw",
+				//"format", G_TYPE_STRING, "ARGB",
+				//"framerate", GST_TYPE_FRACTION, 15, 1,
+				//"pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
+				//"width", G_TYPE_INT, 640,
+				//"height", G_TYPE_INT, 480,
+				nullptr, nullptr);
 	g_object_set(capsfilter, "caps", caps, nullptr);
 
 	// convert to GL texture (as qmlglsink expects, also this force processing the video accelerated by the GPU)
@@ -45,8 +46,8 @@ int main(int argc, char *argv[])
 	// convert from original video format NV12 to format accepted by qmlglsink (RGBA)
 	GstElement *glcolorconvert = gst_element_factory_make("glcolorconvert", nullptr);
 	// QML element sink
-	/* the plugin must be loaded before loading the qml file to register the
-     * GstGLVideoItem qml item */
+	// the plugin must be loaded before loading the qml file to register the
+	// GstGLVideoItem qml item
 	GstElement *sink = gst_element_factory_make("qmlglsink", nullptr);
 	g_object_set(sink, "sync", false, nullptr);
 
@@ -60,8 +61,10 @@ int main(int argc, char *argv[])
 	QQuickItem *videoItem;
 	QQuickWindow *rootObject;
 
-	/* find and set the videoItem on the sink */
-	rootObject = static_cast<QQuickWindow *> (engine.rootObjects().first());
+	// find and set the videoItem on the sink
+	auto ros = engine.rootObjects();
+	Q_ASSERT(!ros.isEmpty());
+	rootObject = static_cast<QQuickWindow *> (ros.first());
 	videoItem = rootObject->findChild<QQuickItem *> ("videoItem");
 	g_object_set(sink, "widget", videoItem, nullptr);
 
