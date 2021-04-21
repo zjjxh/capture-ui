@@ -208,6 +208,7 @@ void InteractionController::get_videorgb() {
 }*/
 
 void InteractionController::capture_image(int card, QString base, int cnt, bool need_bmp, QString cslabel) {
+	(void)cslabel;
 	qDebug() << "capture_image" << base;
 	if (!QDir().mkpath(base))
 		return;
